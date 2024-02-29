@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class JsonUtils {
-
     private static final Map<String, String> repTypeMap = new LinkedHashMap<>();
     static Map<String, String> resultMap = new LinkedHashMap<>();
 

@@ -40,8 +40,6 @@ import com.example.cmo_lms.services.RetrofitClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -79,11 +77,6 @@ public class LetterDetailsActivity extends AppCompatActivity {
     String viewPdf;
     String fileName;
     Dialog loadingDialog;
-
-    public static boolean containsKannadaCharacters(String str) {
-        // Check if the string contains any Kannada characters (Unicode range: \u0C80 to \u0CFF)
-        return str != null && str.matches(".*[\\u0C80-\\u0CFF].*");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
