@@ -72,9 +72,8 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
     Map<String, Map<String, Integer>> innerDataMap;
     String[] nameList;
     Dialog loadingDialog;
-    Button Log_out_Btn, lang_change_btn, lang_change_btn_kn;
+    Button department_btn, subject_btn, constituency_btn, district_btn, Log_out_Btn, lang_change_btn, lang_change_btn_kn;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,11 +107,15 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         linearLayout3 = findViewById(R.id.btn_lin_lay_1);
         linearLayout4 = findViewById(R.id.btn_lin_lay_2);
         search_cv = findViewById(R.id.search_cv);
+        subject_btn = findViewById(R.id.subject_btn);
+        department_btn = findViewById(R.id.department_btn);
+        district_btn = findViewById(R.id.district_btn);
+        constituency_btn = findViewById(R.id.constituency_btn);
         Log_out_Btn = findViewById(R.id.id_log_out);
         lang_change_btn = findViewById(R.id.id_lang_change_en);
         lang_change_btn_kn = findViewById(R.id.id_lang_change_kn);
 
-        startSequentialAnimationForCardview();
+        startSequentialAnimationForCardView();
 
         ObjectAnimator bounceAnimator = ObjectAnimator.ofFloat(search_img, "translationY", 0f, -50f, 0f);
         bounceAnimator.setDuration(2000);
@@ -152,7 +155,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
 
         pdf_txt_btn.setOnClickListener(v -> JsonUtils.generatePdf_summary(innerDataMap, context));
 
-
         String Selected_lang = LanguageUtil.getCurrentLanguage();
 
         if (Selected_lang.equals("en")) {
@@ -171,6 +173,32 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
             setLanguage("kn");
         });
 
+        subject_btn.setOnClickListener(v -> moveToSubjectWiseActivity());
+
+        district_btn.setOnClickListener(V -> moveToDistrictWiseActivity());
+
+        constituency_btn.setOnClickListener(v -> moveToConstituencyWiseActivity());
+
+        department_btn.setOnClickListener(v -> moveToDepartmentWiseActivity());
+
+    }
+    @SuppressLint("SetTextI18n")
+    private void showCustomLoadingDialog() {
+
+        loadingDialog = new Dialog(this);
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadingDialog.setContentView(R.layout.custom_loading_dailogue);
+        loadingDialog.setCancelable(false);
+
+        TextView loadingText = loadingDialog.findViewById(R.id.loadingText);
+        loadingText.setText(getResources().getText(R.string.loading));
+
+    }
+
+    private void dismissCustomLoadingDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     public void setLanguage(String languageCode) {
@@ -187,26 +215,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private void showCustomLoadingDialog() {
-
-        loadingDialog = new Dialog(this);
-        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        loadingDialog.setContentView(R.layout.custom_loading_dailogue);
-        loadingDialog.setCancelable(false);
-
-        TextView loadingText = loadingDialog.findViewById(R.id.loadingText);
-        loadingText.setText(getResources().getText(R.string.loading));
-
-        loadingDialog.show();
-    }
-
-    private void dismissCustomLoadingDialog() {
-        if (loadingDialog != null && loadingDialog.isShowing()) {
-            loadingDialog.dismiss();
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -215,6 +223,22 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
             startActivity(dIntent);
             finish();
         }
+    }
+
+    private void moveToDepartmentWiseActivity() {
+        startActivity(new Intent(this, DepartmentWiseActivity.class));
+    }
+
+    private void moveToConstituencyWiseActivity() {
+        startActivity(new Intent(this, ConstituencyWiseActivity.class));
+    }
+
+    private void moveToDistrictWiseActivity() {
+        startActivity(new Intent(this, DistrictWiseActivity.class));
+    }
+
+    private void moveToSubjectWiseActivity() {
+        startActivity(new Intent(this, SubjectWiseActivity.class));
     }
 
     private void performSearch(String query) {
@@ -327,7 +351,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 }
             });
 
-        } else if (query.matches("^[A-Za-z]{3}/[A-Za-z]{2}/\\d{7}/\\d{4}$")) {
+        } else if (query.matches("^[A-Za-z]{3}/[A-Za-z]{2}/\\d{7}/\\d{4}$")){
             Toast.makeText(context, "search clicked for ref no : " + query, Toast.LENGTH_SHORT).show();
 
             Retrofit retrofit_name = RetrofitClient.getClient();
@@ -379,9 +403,9 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         RecyclerView search_name_data_recycler = dialogView.findViewById(R.id.search_name_custom_popup_recycler_view);
         TextView tv_total_entries = dialogView.findViewById(R.id.tv_total_entries);
 
-        tv_total_entries.setText(getResources().getText(R.string.total_entries) + " " + listOfSearchNameData.size());
+        tv_total_entries.setText(getResources().getText(R.string.total_entries)+" "+listOfSearchNameData.size());
         Search_name_data_Adapter searchNameDataAdapter = new Search_name_data_Adapter(context, listOfSearchNameData);
-        Log.d("search by name data", listOfSearchNameData.size() + listOfSearchNameData.toString());
+        Log.d("search by name data", listOfSearchNameData.toString());
         search_name_data_recycler.setAdapter(searchNameDataAdapter);
         search_name_data_recycler.setLayoutManager(new LinearLayoutManager(this));
         builder.setView(dialogView);
@@ -390,7 +414,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void startSequentialAnimationForCardview() {
+    private void startSequentialAnimationForCardView() {
         startFallingAnimation(cardViewTr);
     }
 
@@ -435,6 +459,26 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         cardViewTd.setTranslationY(0);
         cardViewTp.setTranslationY(0);
     }
+
+    @SuppressLint("StaticFieldLeak")
+    private class SummaryReportAsyncTask extends AsyncTask<Void, Void, Pair<String[], Map<String, Map<String, Integer>>>> {
+        @Override
+        protected Pair<String[], Map<String, Map<String, Integer>>> doInBackground(Void... voids) {
+            return performSummaryReportApiCall();
+        }
+
+        @Override
+        protected void onPostExecute(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
+            // Handle the result
+            if (alldata != null) {
+                handleSummaryReportResult(alldata);
+            } else {
+                // Handle failure
+                Toast.makeText(Details_Cmo_Lms_Activity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void handleSummaryReportResult(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
         // Handle data
@@ -505,23 +549,5 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         }
 
         return null;
-    }
-
-    private class SummaryReportAsyncTask extends AsyncTask<Void, Void, Pair<String[], Map<String, Map<String, Integer>>>> {
-        @Override
-        protected Pair<String[], Map<String, Map<String, Integer>>> doInBackground(Void... voids) {
-            return performSummaryReportApiCall();
-        }
-
-        @Override
-        protected void onPostExecute(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
-            // Handle the result
-            if (alldata != null) {
-                handleSummaryReportResult(alldata);
-            } else {
-                // Handle failure
-                Toast.makeText(Details_Cmo_Lms_Activity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }
