@@ -2,7 +2,6 @@ package com.example.cmo_lms.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +12,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.net.ParseException;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cmo_lms.R;
+import com.example.cmo_lms.Utils.LanguageUtil;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Adapter.MyViewHolder> {
     private final Map<String, String> dataMap;
@@ -46,7 +43,7 @@ public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Ad
         holder.bind(dataMap, position);
         Log.e("adapter data for search refno", dataMap.toString());
         Log.e("adapter data for search name ", dataMap.toString());
-        // setAnimation(holder.itemView, position);
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -103,7 +100,12 @@ public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Ad
         }
 
         private boolean shouldSkipKey(String key) {
-            List<String> keysToSkip = Arrays.asList("Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :", "eOffice Receipt Cmp No :", "eOffice Status :", "eOffice Receipt No :", "eOffice Currently With :", "eOffice Since When :", "eOffice Closing Remarks :", "eOffice FileNumber :", "eOffice File Cmp No :", "eOffice Receipt Updated On :", "Attachment :");
+            List<String> keysToSkip;
+            if (LanguageUtil.getCurrentLanguage().equals("en")) {
+                keysToSkip = Arrays.asList("Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :", "eOffice Receipt Cmp No :", "eOffice Status :", "eOffice Receipt No :", "eOffice Currently With :", "eOffice Since When :", "eOffice Closing Remarks :", "eOffice FileNumber :", "eOffice File Cmp No :", "eOffice Receipt Updated On :", "Attachment :");
+            } else {
+                keysToSkip = Arrays.asList("ಆರ್ ಜಿ ಐಡಿ :", "ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :", "ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಿದವರು :", "ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :", "ಇ-ಕಚೇರಿ ಕಂಪ್ಯೂಟರ್ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಸ್ಥಿತಿ  :", "ಇ-ಕಚೇರಿ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಪ್ರಸ್ತುತ ಹಂತ :", "ಇ-ಕಚೇರಿ ಯಾವಾಗಿಂದ :", "ಇ-ಕಚೇರಿ ಮುಕ್ತಾಯ ಟಿಪ್ಪಣಿಗಳು :", "ಇ-ಕಚೇರಿ ಪತ್ರ ನಂ. :", "ಇ-ಕಚೇರಿ ಪತ್ರ ಸಿಎಂಪಿ ನಂ. :", "ಇ-ಕಚೇರಿ ರಸೀತು ನವೀಕರಿಸಲಾದ ದಿನಾಂಕ :", "ಲಗತ್ತು :");
+            }
             return keysToSkip.contains(key);
         }
 

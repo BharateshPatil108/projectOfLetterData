@@ -1,5 +1,7 @@
 package com.example.cmo_lms.Utils;
 
+import static com.example.cmo_lms.Utils.LanguageUtil.getCurrentLanguage;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -38,23 +40,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class JsonUtils {
-
     private static final Map<String, String> repTypeMap = new LinkedHashMap<>();
     static Map<String, String> resultMap = new LinkedHashMap<>();
-
-    static {
-        repTypeMap.put("5", "ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳು(ಸಿಎಂ- ಟಿಪ್ಪಣಿ)");
-        repTypeMap.put("1", "ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ");
-        repTypeMap.put("3", "ಶಾಸಕರು - ವಿಧಾನ ಪರಿಷತ್‌");
-        repTypeMap.put("2", "ಲೋಕಸಭಾ ಸದಸ್ಯರು");
-        repTypeMap.put("4", "ರಾಜ್ಯಸಭಾ ಸದಸ್ಯರು");
-        repTypeMap.put("6", "ಮಾಜಿ ಶಾಸಕರು – ವಿಧಾನ ಪರಿಷತ್ತು");
-        repTypeMap.put("7", "ಮಾಜಿ ಶಾಸಕರು – ಲೋಕಸಭಾ");
-    }
-
-    public static String getCurrentLanguage() {
-        return Locale.getDefault().getLanguage();
-    }
 
     public static String getRepTypeName(String id) {
         return repTypeMap.get(id);
@@ -71,7 +58,7 @@ public class JsonUtils {
                 JsonObject jsonObject = element.getAsJsonObject();
                 String name = jsonObject.get("name").getAsString();
 
-                String currentLanguage = getCurrentLanguage();
+                String currentLanguage = LanguageUtil.getCurrentLanguage();
                 Log.d("Current Language", currentLanguage);
 
                 if (Objects.equals(name, "CMO/CM")) {
@@ -147,8 +134,28 @@ public class JsonUtils {
         Type type = new TypeToken<Searchref_noResponseModel>() {
         }.getType();
         Searchref_noResponseModel letterData = gson.fromJson(jsonString, type);
-
+        applyRepTypes();
         return letterDataToMap(letterData);
+    }
+
+    private static void applyRepTypes() {
+        if (LanguageUtil.getCurrentLanguage().equals("kn")) {
+            repTypeMap.put("5", "ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳು(ಸಿಎಂ- ಟಿಪ್ಪಣಿ)");
+            repTypeMap.put("1", "ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ");
+            repTypeMap.put("3", "ಶಾಸಕರು - ವಿಧಾನ ಪರಿಷತ್‌");
+            repTypeMap.put("2", "ಲೋಕಸಭಾ ಸದಸ್ಯರು");
+            repTypeMap.put("4", "ರಾಜ್ಯಸಭಾ ಸದಸ್ಯರು");
+            repTypeMap.put("6", "ಮಾಜಿ ಶಾಸಕರು – ವಿಧಾನ ಪರಿಷತ್ತು");
+            repTypeMap.put("7", "ಮಾಜಿ ಶಾಸಕರು – ಲೋಕಸಭಾ");
+        } else {
+            repTypeMap.put("5", "Chief Minister (CM)");
+            repTypeMap.put("1", "MLA");
+            repTypeMap.put("3", "MLC");
+            repTypeMap.put("2", "MP-Lok Sabha");
+            repTypeMap.put("4", "MP-Rajya Sabha");
+            repTypeMap.put("6", "EX-MLC");
+            repTypeMap.put("7", "EX-MP-Lok Sabha");
+        }
     }
 
     private static Map<String, String> letterDataToMap(Searchref_noResponseModel receivedModel) {
@@ -242,7 +249,7 @@ public class JsonUtils {
 
         String[] outerKeysOrder;
 
-        if (LanguageUtil.getCurrentLanguage().equals("en")) {
+        if (getCurrentLanguage().equals("en")) {
             outerKeysOrder = new String[]{"Hon' Chief Minister (CM)", "MLA", "MLC", "MP-Lok Sabha", "MP-Rajya Sabha", "EX-MLC"};
         } else {
             outerKeysOrder = new String[]{"ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳು", "ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ", "ಶಾಸಕರು - ವಿಧಾನ ಪರಿಷತ್‌", "ಲೋಕಸಭಾ ಸದಸ್ಯರು", "ರಾಜ್ಯಸಭಾ ಸದಸ್ಯರು", "ಮಾಜಿ ಶಾಸಕರು – ವಿಧಾನ ಪರಿಷತ್ತು"};
@@ -255,7 +262,7 @@ public class JsonUtils {
                 yPosition += lineHeight;
 
                 String[] innerKeysOrder;
-                if (LanguageUtil.getCurrentLanguage().equals("en")) {
+                if (getCurrentLanguage().equals("en")) {
                     innerKeysOrder = new String[]{"Count", "Pending Count", "Accepted Closed Count", "Rejected Closed Count", "Closed Count"};
                 } else {
                     innerKeysOrder = new String[]{"ಎಣಿಕೆ", "ಬಾಕಿಯಿರುವ ಎಣಿಕೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗಿದೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆ"};
@@ -393,7 +400,11 @@ public class JsonUtils {
         }
 
         pdfDocument.finishPage(page);
-        savePdf(pdfDocument, context, pdfData.get("Letter No :"));
+        if (LanguageUtil.getCurrentLanguage().equals("en")) {
+            savePdf(pdfDocument, context, pdfData.get("Letter No :"));
+        } else {
+            savePdf(pdfDocument, context, pdfData.get("ಪತ್ರದ ಸಂಖ್ಯೆ :"));
+        }
         pdfDocument.close();
     }
 
@@ -412,7 +423,12 @@ public class JsonUtils {
     }
 
     private static boolean shouldSkipKey(String key) {
-        List<String> keysToSkip = Arrays.asList("Attachment :", "Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :");
+        List<String> keysToSkip;
+        if (LanguageUtil.getCurrentLanguage().equals("en")) {
+            keysToSkip = Arrays.asList("Attachment :", "Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :");
+        } else {
+            keysToSkip = Arrays.asList("ಲಗತ್ತು :", "ಆರ್ ಜಿ ಐಡಿ :", "ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :", "ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಿದವರು :", "ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :");
+        }
         return keysToSkip.contains(key);
     }
 

@@ -12,15 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
@@ -33,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cmo_lms.Utils.InternetUtil;
+import com.example.cmo_lms.Utils.LanguageUtil;
 import com.example.cmo_lms.adapters.Search_name_data_Adapter;
 import com.example.cmo_lms.model.Cmo_Lms_Summary_ResponseModel;
 import com.example.cmo_lms.model.SearchResponseModel;
@@ -55,42 +61,45 @@ import retrofit2.Retrofit;
 
 public class Details_Cmo_Lms_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
-    TextView textView, textView1, txt_view1, textView2, textView3, txt_view4, txt_view5, txt_view6, txt_view7, pdf_txt_btn;
-    ImageView imageView, imageView1, imageView2, imageView3, search_img, pdf_img;
+    TextView cm_name_tv, cm_state_tv, txt_tr, txt_td, txt_tp, txt_tr_no, txt_td_no, txt_tp_no, txt_summary_tv, pdf_txt_btn, head_govr_name;
+    ImageView background_img, background_img_clr, logo_img, cm_img, search_img, pdf_img;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
-    EditText edt_txt;
+    EditText search_edt_txt;
     RecycleAdapter adapter;
     CardView cardViewTr, cardViewTd, cardViewTp, search_cv;
     NestedScrollView nestedScrollView;
     Context context = this;
     Map<String, Map<String, Integer>> innerDataMap;
     String[] nameList;
-    Button department_btn, subject_btn, constituency_btn, district_btn, Log_out_Btn;
+    Dialog loadingDialog;
+    Button Log_out_Btn, lang_change_btn, lang_change_btn_kn;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_cmo_lms);
 
-        imageView = findViewById(R.id.imageView1);
-        imageView1 = findViewById(R.id.imageView2);
-        textView = findViewById(R.id.cm_name);
-        textView1 = findViewById(R.id.cm_state);
+        background_img = findViewById(R.id.imageView1);
+        background_img_clr = findViewById(R.id.imageView2);
+        head_govr_name = findViewById(R.id.government_txt);
+        cm_name_tv = findViewById(R.id.cm_name);
+        cm_state_tv = findViewById(R.id.cm_state);
         cardViewTr = findViewById(R.id.cv_tr);
-        imageView2 = findViewById(R.id.imageView3);
-        edt_txt = findViewById(R.id.search_txt);
-        txt_view1 = findViewById(R.id.txt_tr);
+        logo_img = findViewById(R.id.imageView3);
+        search_edt_txt = findViewById(R.id.search_txt);
+        txt_tr = findViewById(R.id.txt_tr);
         cardViewTd = findViewById(R.id.cv_td);
-        imageView3 = findViewById(R.id.cm_img);
-        textView2 = findViewById(R.id.txt_td);
-        textView3 = findViewById(R.id.txt_tp);
+        cm_img = findViewById(R.id.cm_img);
+        txt_td = findViewById(R.id.txt_td);
+        txt_tp = findViewById(R.id.txt_tp);
         cardViewTp = findViewById(R.id.cv_tp);
         search_img = findViewById(R.id.search_engin);
-        txt_view4 = findViewById(R.id.tr_number);
-        txt_view5 = findViewById(R.id.td_number);
-        txt_view6 = findViewById(R.id.tp_number);
+        txt_tr_no = findViewById(R.id.tr_number);
+        txt_td_no = findViewById(R.id.td_number);
+        txt_tp_no = findViewById(R.id.tp_number);
         linearLayout1 = findViewById(R.id.lin_lay_4);
-        txt_view7 = findViewById(R.id.cmo_lms_summary);
+        txt_summary_tv = findViewById(R.id.cmo_lms_summary);
         linearLayout2 = findViewById(R.id.lin_lay_5);
         pdf_img = findViewById(R.id.file_img_pdf);
         pdf_txt_btn = findViewById(R.id.pdf_txt_btn);
@@ -99,13 +108,11 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         linearLayout3 = findViewById(R.id.btn_lin_lay_1);
         linearLayout4 = findViewById(R.id.btn_lin_lay_2);
         search_cv = findViewById(R.id.search_cv);
-        subject_btn = findViewById(R.id.subject_btn);
-        department_btn = findViewById(R.id.department_btn);
-        district_btn = findViewById(R.id.district_btn);
-        constituency_btn = findViewById(R.id.constituency_btn);
         Log_out_Btn = findViewById(R.id.id_log_out);
+        lang_change_btn = findViewById(R.id.id_lang_change_en);
+        lang_change_btn_kn = findViewById(R.id.id_lang_change_kn);
 
-        startSequentialAnimationForCardView();
+        startSequentialAnimationForCardview();
 
         ObjectAnimator bounceAnimator = ObjectAnimator.ofFloat(search_img, "translationY", 0f, -50f, 0f);
         bounceAnimator.setDuration(2000);
@@ -117,12 +124,14 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         // Call AsyncTask to initiate network call
         new SummaryReportAsyncTask().execute();
 
-        search_img.setOnClickListener(v -> edt_txt.requestFocus());
+        search_img.setOnClickListener(v -> search_edt_txt.requestFocus());
 
-        edt_txt.setOnEditorActionListener((v, actionId, event) -> {
+        search_edt_txt.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                edt_txt.setEnabled(false);
-                performSearch(edt_txt.getText().toString().trim());
+                search_edt_txt.setEnabled(false);
+                showCustomLoadingDialog();
+                performSearch(search_edt_txt.getText().toString().trim());
+                new Handler().postDelayed(this::dismissCustomLoadingDialog, 2000);
                 return true;
             }
             return false;
@@ -143,14 +152,59 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
 
         pdf_txt_btn.setOnClickListener(v -> JsonUtils.generatePdf_summary(innerDataMap, context));
 
-        subject_btn.setOnClickListener(v -> moveToSubjectWiseActivity());
 
-        district_btn.setOnClickListener(V -> moveToDistrictWiseActivity());
+        String Selected_lang = LanguageUtil.getCurrentLanguage();
 
-        constituency_btn.setOnClickListener(v -> moveToConstituencyWiseActivity());
+        if (Selected_lang.equals("en")) {
+            lang_change_btn.setVisibility(View.GONE);
+            lang_change_btn_kn.setVisibility(View.VISIBLE);
+        } else {
+            lang_change_btn_kn.setVisibility(View.GONE);
+            lang_change_btn.setVisibility(View.VISIBLE);
+        }
 
-        department_btn.setOnClickListener(v -> moveToDepartmentWiseActivity());
+        lang_change_btn.setOnClickListener(v -> {
+            setLanguage("en");
+        });
 
+        lang_change_btn_kn.setOnClickListener(v -> {
+            setLanguage("kn");
+        });
+
+    }
+
+    public void setLanguage(String languageCode) {
+        if (context != null) {
+            LanguageUtil.setAppLocale(context, languageCode);
+            recreate();
+
+            Resources resources = context.getResources();
+            DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+            android.content.res.Configuration configuration = resources.getConfiguration();
+
+            resources.updateConfiguration(configuration, displayMetrics);
+            context.createConfigurationContext(configuration);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showCustomLoadingDialog() {
+
+        loadingDialog = new Dialog(this);
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadingDialog.setContentView(R.layout.custom_loading_dailogue);
+        loadingDialog.setCancelable(false);
+
+        TextView loadingText = loadingDialog.findViewById(R.id.loadingText);
+        loadingText.setText(getResources().getText(R.string.loading));
+
+        loadingDialog.show();
+    }
+
+    private void dismissCustomLoadingDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     @Override
@@ -161,22 +215,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
             startActivity(dIntent);
             finish();
         }
-    }
-
-    private void moveToDepartmentWiseActivity() {
-        startActivity(new Intent(this, DepartmentWiseActivity.class));
-    }
-
-    private void moveToConstituencyWiseActivity() {
-        startActivity(new Intent(this, ConstituencyWiseActivity.class));
-    }
-
-    private void moveToDistrictWiseActivity() {
-        startActivity(new Intent(this, DistrictWiseActivity.class));
-    }
-
-    private void moveToSubjectWiseActivity() {
-        startActivity(new Intent(this, SubjectWiseActivity.class));
     }
 
     private void performSearch(String query) {
@@ -289,7 +327,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 }
             });
 
-        } else if (query.matches("^[A-Za-z]{3}/[A-Za-z]{2}/\\d{7}/\\d{4}$")){
+        } else if (query.matches("^[A-Za-z]{3}/[A-Za-z]{2}/\\d{7}/\\d{4}$")) {
             Toast.makeText(context, "search clicked for ref no : " + query, Toast.LENGTH_SHORT).show();
 
             Retrofit retrofit_name = RetrofitClient.getClient();
@@ -325,10 +363,10 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 }
             });
 
-        }else {
+        } else {
             Toast.makeText(context, "Invalid Search Input", Toast.LENGTH_SHORT).show();
         }
-        edt_txt.setEnabled(true);
+        search_edt_txt.setEnabled(true);
     }
 
     @SuppressLint("SetTextI18n")
@@ -341,9 +379,9 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         RecyclerView search_name_data_recycler = dialogView.findViewById(R.id.search_name_custom_popup_recycler_view);
         TextView tv_total_entries = dialogView.findViewById(R.id.tv_total_entries);
 
-        tv_total_entries.setText(getResources().getText(R.string.total_entries)+" "+listOfSearchNameData.size());
+        tv_total_entries.setText(getResources().getText(R.string.total_entries) + " " + listOfSearchNameData.size());
         Search_name_data_Adapter searchNameDataAdapter = new Search_name_data_Adapter(context, listOfSearchNameData);
-        Log.d("search by name data", listOfSearchNameData.toString());
+        Log.d("search by name data", listOfSearchNameData.size() + listOfSearchNameData.toString());
         search_name_data_recycler.setAdapter(searchNameDataAdapter);
         search_name_data_recycler.setLayoutManager(new LinearLayoutManager(this));
         builder.setView(dialogView);
@@ -352,7 +390,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void startSequentialAnimationForCardView() {
+    private void startSequentialAnimationForCardview() {
         startFallingAnimation(cardViewTr);
     }
 
@@ -370,11 +408,11 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
 
                 if (cardView == cardViewTr) {
                     cardViewTd.setVisibility(View.VISIBLE);
-                    textView2.setVisibility(View.VISIBLE);
+                    txt_td.setVisibility(View.VISIBLE);
                     startFallingAnimation(cardViewTd);
                 } else if (cardView == cardViewTd) {
                     cardViewTp.setVisibility(View.VISIBLE);
-                    textView3.setVisibility(View.VISIBLE);
+                    txt_tp.setVisibility(View.VISIBLE);
                     startFallingAnimation(cardViewTp);
                 } else if (cardView == cardViewTp) {
 
@@ -398,24 +436,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         cardViewTp.setTranslationY(0);
     }
 
-    private class SummaryReportAsyncTask extends AsyncTask<Void, Void, Pair<String[], Map<String, Map<String, Integer>>>> {
-        @Override
-        protected Pair<String[], Map<String, Map<String, Integer>>> doInBackground(Void... voids) {
-            return performSummaryReportApiCall();
-        }
-
-        @Override
-        protected void onPostExecute(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
-            // Handle the result
-            if (alldata != null) {
-                handleSummaryReportResult(alldata);
-            } else {
-                // Handle failure
-                Toast.makeText(Details_Cmo_Lms_Activity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void handleSummaryReportResult(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
         // Handle data
         if (alldata != null) {
@@ -428,16 +448,24 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 int totalCount = 0;
 
                 for (Map<String, Integer> countsMap : innerDataMap.values()) {
-                    if (countsMap != null) {
-                        totalPendingCount += countsMap.getOrDefault("Pending Count", 0);
-                        totalClosedCount += countsMap.getOrDefault("Closed Count", 0);
-                        totalCount += countsMap.getOrDefault("Count", 0);
+                    if (LanguageUtil.getCurrentLanguage().equals("en")) {
+                        if (countsMap != null) {
+                            totalPendingCount += countsMap.getOrDefault("Pending Count", 0);
+                            totalClosedCount += countsMap.getOrDefault("Closed Count", 0);
+                            totalCount += countsMap.getOrDefault("Count", 0);
+                        }
+                    } else {
+                        if (countsMap != null) {
+                            totalPendingCount += countsMap.getOrDefault("ಬಾಕಿಯಿರುವ ಎಣಿಕೆ", 0);
+                            totalClosedCount += countsMap.getOrDefault("ಮುಚ್ಚಿದ ಎಣಿಕೆ", 0);
+                            totalCount += countsMap.getOrDefault("ಎಣಿಕೆ", 0);
+                        }
                     }
                 }
 
-                txt_view4.setText(String.valueOf(totalCount));
-                txt_view5.setText(String.valueOf(totalClosedCount));
-                txt_view6.setText(String.valueOf(totalPendingCount));
+                txt_tr_no.setText(String.valueOf(totalCount));
+                txt_td_no.setText(String.valueOf(totalClosedCount));
+                txt_tp_no.setText(String.valueOf(totalPendingCount));
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(context);
                 recyclerView.setLayoutManager(layoutManager);
@@ -452,7 +480,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
             Toast.makeText(this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private Pair<String[], Map<String, Map<String, Integer>>> performSummaryReportApiCall() {
         Retrofit retrofit_cmolms = RetrofitClient.getClient();
@@ -478,5 +505,23 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+    private class SummaryReportAsyncTask extends AsyncTask<Void, Void, Pair<String[], Map<String, Map<String, Integer>>>> {
+        @Override
+        protected Pair<String[], Map<String, Map<String, Integer>>> doInBackground(Void... voids) {
+            return performSummaryReportApiCall();
+        }
+
+        @Override
+        protected void onPostExecute(Pair<String[], Map<String, Map<String, Integer>>> alldata) {
+            // Handle the result
+            if (alldata != null) {
+                handleSummaryReportResult(alldata);
+            } else {
+                // Handle failure
+                Toast.makeText(Details_Cmo_Lms_Activity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
