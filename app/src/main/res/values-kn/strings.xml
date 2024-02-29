@@ -69,10 +69,10 @@
     <string name="closure_date">ಮುಚ್ಚುವ ದಿನಾಂಕ :</string>
     <string name="closure_description">ಮುಚ್ಚುವಿಕೆಯ ವಿವರಣೆ :</string>
     <string name="post_id">ಪೋಸ್ಟ್ ಹೆಸರು :</string>
-    <string name="mla_constituency">ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ ಕ್ಷೇತ್ರ :</string>
-    <string name="mpl_constituency">ಎಂಪಿಎಲ್ ಕ್ಷೇತ್ರ :</string>
-    <string name="ex_mlc_constituency">ಇಎಕ್ಸ್-ಎಂಎಲ್‌ಸಿ ಕ್ಷೇತ್ರ :</string>
-    <string name="mlc_constituency">ಎಂಎಲ್‌ಸಿ ಕ್ಷೇತ್ರ :</string>
+    <string name="mla_constituency">ವಿಧಾನ ಸಭೆ - ಶಾಸಕರ ಕ್ಷೇತ್ರ :</string>
+    <string name="mpl_constituency">ಲೋಕಸಭಾ ಸದಸ್ಯರ ಕ್ಷೇತ್ರ :</string>
+    <string name="ex_mlc_constituency">ವಿಧಾನ ಪರಿಷತ್ತು - ಮಾಜಿ ಶಾಸಕರ ಕ್ಷೇತ್ರ :</string>
+    <string name="mlc_constituency">ವಿಧಾನ ಪರಿಷತ್ - ಶಾಸಕರ ಕ್ಷೇತ್ರ :</string>
     <string name="cm_remark">ಸಿಎಂ ಟೀಕೆ :</string>
     <string name="priority_days">ಆದ್ಯತೆಯ ದಿನಗಳು :</string>
     <string name="no_of_days">ದಿನಗಳ ಸಂಖ್ಯೆ :</string>

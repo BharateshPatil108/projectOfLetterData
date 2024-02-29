@@ -75,62 +75,6 @@ public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Ad
         @SuppressLint("SetTextI18n")
         public void bind(Map<String, String> dataMap, int position) {
 
-            Map<String, String> kannadaKeys = new LinkedHashMap<>();
-
-            if (LanguageUtil.getCurrentLanguage().equals("kn")) {
-                kannadaKeys.put("Representative No :","ಪ್ರತಿನಿಧಿ ಸಂಖ್ಯೆ :");
-                kannadaKeys.put("Date :","ದಿನಾಂಕ :");
-                kannadaKeys.put("Letter No :","ಪತ್ರದ ಸಂಖ್ಯೆ :");
-                kannadaKeys.put("Representative Name :","ಪ್ರತಿನಿಧಿ ಹೆಸರು :");
-                kannadaKeys.put("Representative Mob :","ಪ್ರತಿನಿಧಿ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ. :");
-                kannadaKeys.put("Representative Address :","ಪತ್ರದಲ್ಲಿರುವಂತೆ ವಿಳಾಸ :");
-                kannadaKeys.put("Representative Griv Category :","ಪ್ರತಿನಿಧಿ ವರ್ಗ :");
-                kannadaKeys.put("Attachment :","ಲಗತ್ತು :");
-                kannadaKeys.put("CM Note Path :","ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ ಸಾರಾಂಶ :");
-                kannadaKeys.put("Letter Description :","ಪತ್ರದ/ಟಿಪ್ಪಣಿಯ ಸಂಕ್ಷಿಪ್ತ ವಿವರ :");
-                kannadaKeys.put("Forwarded Dept Id :","ಇಲಾಖೆ : ");
-                kannadaKeys.put("Forwarded LineDepartment ID :","ಸಾಲಿನ ಇಲಾಖೆ :");
-                kannadaKeys.put("Forwarded District ID :","ಜಿಲ್ಲೆ :");
-                kannadaKeys.put("Status :","ಸ್ಥಿತಿ :");
-                kannadaKeys.put("Post Name :","ಪೋಸ್ಟ್ ಹೆಸರು : ");
-                kannadaKeys.put("Representative Type :","ಚುನಾಯಿತ ಪ್ರತಿನಿಧಿ :");
-                kannadaKeys.put("MLA Constituency :","ಕ್ಷೇತ್ರ :");
-                kannadaKeys.put("MP-Lok Sabha Constituency :","ಕ್ಷೇತ್ರ :");
-                kannadaKeys.put("MP-Rajya Sabha Constituency :","ಕ್ಷೇತ್ರ :");
-                kannadaKeys.put("Ex MLC Constituency :","ಕ್ಷೇತ್ರ :");
-                kannadaKeys.put("MLC Constituency :","ಕ್ಷೇತ್ರ :");
-                kannadaKeys.put("CM Remark :","ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ ಸಾರಾಂಶ :");
-                kannadaKeys.put("Priority :","ಆದ್ಯತೆ :");
-                kannadaKeys.put("Number of Days :","ದಿನಗಳ ಸಂಖ್ಯೆ :");
-
-                dataMap.put(kannadaKeys.get("Representative No :"),dataMap.get("Representative No :"));
-                dataMap.put(kannadaKeys.get("Date :"),dataMap.get("Date :"));
-                dataMap.put(kannadaKeys.get("Letter No :"),dataMap.get("Letter No :"));
-                dataMap.put(kannadaKeys.get("Representative Name :"),dataMap.get("Representative Name :"));
-                dataMap.put(kannadaKeys.get("Representative Mob :"),dataMap.get("Representative Mob :"));
-                dataMap.put(kannadaKeys.get("Representative Address :"),dataMap.get("Representative Address :"));
-                dataMap.put(kannadaKeys.get("Representative Griv Category :"),dataMap.get("Representative Griv Category :"));
-                dataMap.put(kannadaKeys.get("Attachment :"),dataMap.get("Attachment :"));
-                dataMap.put(kannadaKeys.get("CM Note Path :"),dataMap.get("CM Note Path :"));
-                dataMap.put(kannadaKeys.get("Letter Description :"),dataMap.get("Letter Description :"));
-                dataMap.put(kannadaKeys.get("Forwarded Dept Id :"),dataMap.get("Forwarded Dept Id :"));
-                dataMap.put(kannadaKeys.get("Forwarded LineDepartment ID :"),dataMap.get("Forwarded LineDepartment ID :"));
-                dataMap.put(kannadaKeys.get("Forwarded District ID :"),dataMap.get("Forwarded District ID :"));
-                dataMap.put(kannadaKeys.get("Status :"),dataMap.get("Status :"));
-                dataMap.put(kannadaKeys.get("Post Name :"),dataMap.get("Post Name :"));
-                dataMap.put(kannadaKeys.get("Representative Type :"),dataMap.get("Representative Type :"));
-                dataMap.put(kannadaKeys.get("MLA Constituency :"),dataMap.get("MLA Constituency :"));
-                dataMap.put(kannadaKeys.get("MP-Lok Sabha Constituency :"),dataMap.get("MP-Lok Sabha Constituency :"));
-                dataMap.put(kannadaKeys.get("MP-Rajya Sabha Constituency :"),dataMap.get("MP-Rajya Sabha Constituency :"));
-                dataMap.put(kannadaKeys.get("MLC Constituency :"),dataMap.get("MLC Constituency :"));
-                dataMap.put(kannadaKeys.get("CM Remark :"),dataMap.get("CM Remark :"));
-                dataMap.put(kannadaKeys.get("Priority :"),dataMap.get("Priority :"));
-                dataMap.put(kannadaKeys.get("Number of Days :"),dataMap.get("Number of Days :"));
-                String key = (String) dataMap.keySet().toArray()[position];
-
-
-            }
-
             String key = (String) dataMap.keySet().toArray()[position];
 
             String value = dataMap.get(key);
@@ -157,7 +101,12 @@ public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Ad
         }
 
         private boolean shouldSkipKey(String key) {
-            List<String> keysToSkip = Arrays.asList("Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :", "eOffice Receipt Cmp No :", "eOffice Status :", "eOffice Receipt No :", "eOffice Currently With :", "eOffice Since When :", "eOffice Closing Remarks :", "eOffice FileNumber :", "eOffice File Cmp No :", "eOffice Receipt Updated On :", "Attachment :");
+            List<String> keysToSkip;
+            if (LanguageUtil.getCurrentLanguage().equals("en")) {
+                keysToSkip = Arrays.asList("Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :", "eOffice Receipt Cmp No :", "eOffice Status :", "eOffice Receipt No :", "eOffice Currently With :", "eOffice Since When :", "eOffice Closing Remarks :", "eOffice FileNumber :", "eOffice File Cmp No :", "eOffice Receipt Updated On :", "Attachment :");
+            } else  {
+                keysToSkip = Arrays.asList("ಆರ್ ಜಿ ಐಡಿ :", "ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :", "ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಿದವರು :", "ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :", "ಇ-ಕಚೇರಿ ಕಂಪ್ಯೂಟರ್ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಸ್ಥಿತಿ  :", "ಇ-ಕಚೇರಿ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಪ್ರಸ್ತುತ ಹಂತ :", "ಇ-ಕಚೇರಿ ಯಾವಾಗಿಂದ :", "ಇ-ಕಚೇರಿ ಮುಕ್ತಾಯ ಟಿಪ್ಪಣಿಗಳು :", "ಇ-ಕಚೇರಿ ಪತ್ರ ನಂ. :", "ಇ-ಕಚೇರಿ ಪತ್ರ ಸಿಎಂಪಿ ನಂ. :", "ಇ-ಕಚೇರಿ ರಸೀತು ನವೀಕರಿಸಲಾದ ದಿನಾಂಕ :", "ಲಗತ್ತು :");
+            }
             return keysToSkip.contains(key);
         }
 
