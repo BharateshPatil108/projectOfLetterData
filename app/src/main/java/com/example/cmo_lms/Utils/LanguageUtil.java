@@ -10,6 +10,7 @@ import java.util.Locale;
 
 public class LanguageUtil {
     private static String lang;
+
     public static void setAppLocale(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);

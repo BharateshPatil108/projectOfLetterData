@@ -65,11 +65,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LetterDetailsActivity extends AppCompatActivity {
     static RecyclerView recyclerView_name;
-    ConstraintLayout letter_const_lay;
     static Map<String, String> dataMap = new LinkedHashMap<>();
-    Map<String, String> kannadaDataMap = new LinkedHashMap<>();
     static Map<String, Integer> apiCallMap_searchIds = new LinkedHashMap<>();
     static RepDetailsResponse repDetails;
+    ConstraintLayout letter_const_lay;
+    Map<String, String> kannadaDataMap = new LinkedHashMap<>();
     RecyclerView recycleView_letter_eOffice;
     LinearLayout linearLayout;
     TextView pdfBtnTxt;
@@ -79,6 +79,11 @@ public class LetterDetailsActivity extends AppCompatActivity {
     String viewPdf;
     String fileName;
     Dialog loadingDialog;
+
+    public static boolean containsKannadaCharacters(String str) {
+        // Check if the string contains any Kannada characters (Unicode range: \u0C80 to \u0CFF)
+        return str != null && str.matches(".*[\\u0C80-\\u0CFF].*");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,7 +330,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                             int intValue = value != null && !value.equals("null") ? Integer.parseInt(value) : 0;
                             apiCallMap_searchIds.put(key, intValue);
                         }
-                        Log.e("apiCallMap_searchIds",apiCallMap_searchIds.toString());
+                        Log.e("apiCallMap_searchIds", apiCallMap_searchIds.toString());
                         fetchRepDetails(apiCallMap_searchIds);
                     }
                 } else {
@@ -370,8 +375,8 @@ public class LetterDetailsActivity extends AppCompatActivity {
                     repDetails = response.body();
 
                     Log.e("repDetails_ofIds", repDetails.toString());
-                    Map<String,String> kannada_map = new LinkedHashMap<>();
-                    Map<String,String> english_map = new LinkedHashMap<>();
+                    Map<String, String> kannada_map = new LinkedHashMap<>();
+                    Map<String, String> english_map = new LinkedHashMap<>();
 
                     String repName = repDetails.getRepName();
                     if (repName != null) {
@@ -455,55 +460,55 @@ public class LetterDetailsActivity extends AppCompatActivity {
                             dataMap.put("MLA Constituency :", kannada_map.get("ಕ್ಷೇತ್ರದ ಹೆಸರು :"));
                         }
 
-                        Log.e("kannada data",kannada_map.toString());
+                        Log.e("kannada data", kannada_map.toString());
 
                         Map<String, String> kannadaKeys = new LinkedHashMap<>();
 
-                        kannadaKeys.put("Rg ID :","ಆರ್ ಜಿ ಐಡಿ :");
-                        kannadaKeys.put("Representative No :","ಪ್ರತಿನಿಧಿ ಸಂಖ್ಯೆ :");
-                        kannadaKeys.put("Date :","ದಿನಾಂಕ :");
-                        kannadaKeys.put("Letter No :","ಪತ್ರದ ಸಂಖ್ಯೆ :");
-                        kannadaKeys.put("Representative Name :","ಪ್ರತಿನಿಧಿ ಹೆಸರು :");
-                        kannadaKeys.put("Representative Mob :","ಪ್ರತಿನಿಧಿ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ. :");
-                        kannadaKeys.put("Representative Address :","ಪತ್ರದಲ್ಲಿರುವಂತೆ ವಿಳಾಸ :");
-                        kannadaKeys.put("Representative Griv Category :","ಪ್ರತಿನಿಧಿ ಕುಂದುಕೊರತೆ ವರ್ಗ :");
-                        kannadaKeys.put("Attachment :","ಲಗತ್ತು :");
-                        kannadaKeys.put("CM Note Path :","ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ :");
-                        kannadaKeys.put("Letter Description :","ಪತ್ರದ/ಟಿಪ್ಪಣಿಯ ಸಂಕ್ಷಿಪ್ತ ವಿವರ :");
-                        kannadaKeys.put("Forwarded Dept Id :","ಇಲಾಖೆ : ");
-                        kannadaKeys.put("Forwarded LineDepartment ID :","ಸಾಲಿನ ಇಲಾಖೆ :");
-                        kannadaKeys.put("Forwarded District ID :","ಜಿಲ್ಲೆ :");
-                        kannadaKeys.put("Status :","ಸ್ಥಿತಿ :");
-                        kannadaKeys.put("Post Name :","ಪೋಸ್ಟ್ ಹೆಸರು : ");
-                        kannadaKeys.put("Closure Date :","ಮುಚ್ಚುವ ದಿನಾಂಕ :");
-                        kannadaKeys.put("Closure Description :","ಮುಚ್ಚುವಿಕೆಯ ವಿವರಣೆ :");
-                        kannadaKeys.put("Rg is Atr Filled :","ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :");
-                        kannadaKeys.put("Rg is Active :","ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :");
-                        kannadaKeys.put("Rg Created On :","ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :");
-                        kannadaKeys.put("Rg Created By :","ಆರ್ ಜಿ ರಚಿಸಿದವರು :");
-                        kannadaKeys.put("Rg Updated On :","ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :");
-                        kannadaKeys.put("Rg Updated By :","ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :");
-                        kannadaKeys.put("Representative Type :","ಚುನಾಯಿತ ಪ್ರತಿನಿಧಿ :");
-                        kannadaKeys.put("MLA Constituency :","ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ ಕ್ಷೇತ್ರ :");
-                        kannadaKeys.put("MP-Lok Sabha Constituency :","ಲೋಕಸಭಾ ಸದಸ್ಯರ ಕ್ಷೇತ್ರ :");
-                        kannadaKeys.put("MP-Rajya Sabha Constituency :","ರಾಜ್ಯಸಭಾ ಸದಸ್ಯರ ಕ್ಷೇತ್ರ :");
-                        kannadaKeys.put("Ex MLC Constituency :","ವಿಧಾನ ಪರಿಷತ್ತು - ಮಾಜಿ ಶಾಸಕರ ಕ್ಷೇತ್ರ :");
-                        kannadaKeys.put("MLC Constituency :","ವಿಧಾನ ಪರಿಷತ್ - ಶಾಸಕರ ಕ್ಷೇತ್ರ :");
-                        kannadaKeys.put("CM Remark :","ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ ಸಾರಾಂಶ :");
-                        kannadaKeys.put("Priority :","ಆದ್ಯತೆ :");
-                        kannadaKeys.put("Number of Days :","ದಿನಗಳ ಸಂಖ್ಯೆ :");
-                        kannadaKeys.put("eOffice Receipt Cmp No :","ಇ-ಕಚೇರಿ ಕಂಪ್ಯೂಟರ್ ರಶೀದಿ ನಂ. :");
-                        kannadaKeys.put("eOffice Status :","ಇ-ಕಚೇರಿ ಸ್ಥಿತಿ  :");
-                        kannadaKeys.put("eOffice Receipt No :","ಇ-ಕಚೇರಿ ರಶೀದಿ ನಂ. :");
-                        kannadaKeys.put("eOffice Currently With :","ಇ-ಕಚೇರಿ ಪ್ರಸ್ತುತ ಹಂತ :");
-                        kannadaKeys.put("eOffice Since When :","ಇ-ಕಚೇರಿ ಯಾವಾಗಿಂದ :");
-                        kannadaKeys.put("eOffice Closing Remarks :","ಇ-ಕಚೇರಿ ಮುಕ್ತಾಯ ಟಿಪ್ಪಣಿಗಳು :");
-                        kannadaKeys.put("eOffice FileNumber :","ಇ-ಕಚೇರಿ ಪತ್ರ ನಂ. :");
-                        kannadaKeys.put("eOffice File Cmp No :","ಇ-ಕಚೇರಿ ಪತ್ರ ಸಿಎಂಪಿ ನಂ. :");
-                        kannadaKeys.put("eOffice Receipt Updated On :","ಇ-ಕಚೇರಿ ರಸೀತು ನವೀಕರಿಸಲಾದ ದಿನಾಂಕ :");
-                        kannadaKeys.put("eOffice Dep Code :","ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :");
+                        kannadaKeys.put("Rg ID :", "ಆರ್ ಜಿ ಐಡಿ :");
+                        kannadaKeys.put("Representative No :", "ಪ್ರತಿನಿಧಿ ಸಂಖ್ಯೆ :");
+                        kannadaKeys.put("Date :", "ದಿನಾಂಕ :");
+                        kannadaKeys.put("Letter No :", "ಪತ್ರದ ಸಂಖ್ಯೆ :");
+                        kannadaKeys.put("Representative Name :", "ಪ್ರತಿನಿಧಿ ಹೆಸರು :");
+                        kannadaKeys.put("Representative Mob :", "ಪ್ರತಿನಿಧಿ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ. :");
+                        kannadaKeys.put("Representative Address :", "ಪತ್ರದಲ್ಲಿರುವಂತೆ ವಿಳಾಸ :");
+                        kannadaKeys.put("Representative Griv Category :", "ಪ್ರತಿನಿಧಿ ಕುಂದುಕೊರತೆ ವರ್ಗ :");
+                        kannadaKeys.put("Attachment :", "ಲಗತ್ತು :");
+                        kannadaKeys.put("CM Note Path :", "ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ :");
+                        kannadaKeys.put("Letter Description :", "ಪತ್ರದ/ಟಿಪ್ಪಣಿಯ ಸಂಕ್ಷಿಪ್ತ ವಿವರ :");
+                        kannadaKeys.put("Forwarded Dept Id :", "ಇಲಾಖೆ : ");
+                        kannadaKeys.put("Forwarded LineDepartment ID :", "ಸಾಲಿನ ಇಲಾಖೆ :");
+                        kannadaKeys.put("Forwarded District ID :", "ಜಿಲ್ಲೆ :");
+                        kannadaKeys.put("Status :", "ಸ್ಥಿತಿ :");
+                        kannadaKeys.put("Post Name :", "ಪೋಸ್ಟ್ ಹೆಸರು : ");
+                        kannadaKeys.put("Closure Date :", "ಮುಚ್ಚುವ ದಿನಾಂಕ :");
+                        kannadaKeys.put("Closure Description :", "ಮುಚ್ಚುವಿಕೆಯ ವಿವರಣೆ :");
+                        kannadaKeys.put("Rg is Atr Filled :", "ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :");
+                        kannadaKeys.put("Rg is Active :", "ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :");
+                        kannadaKeys.put("Rg Created On :", "ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :");
+                        kannadaKeys.put("Rg Created By :", "ಆರ್ ಜಿ ರಚಿಸಿದವರು :");
+                        kannadaKeys.put("Rg Updated On :", "ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :");
+                        kannadaKeys.put("Rg Updated By :", "ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :");
+                        kannadaKeys.put("Representative Type :", "ಚುನಾಯಿತ ಪ್ರತಿನಿಧಿ :");
+                        kannadaKeys.put("MLA Constituency :", "ಶಾಸಕರು - ವಿಧಾನ ಸಭೆ ಕ್ಷೇತ್ರ :");
+                        kannadaKeys.put("MP-Lok Sabha Constituency :", "ಲೋಕಸಭಾ ಸದಸ್ಯರ ಕ್ಷೇತ್ರ :");
+                        kannadaKeys.put("MP-Rajya Sabha Constituency :", "ರಾಜ್ಯಸಭಾ ಸದಸ್ಯರ ಕ್ಷೇತ್ರ :");
+                        kannadaKeys.put("Ex MLC Constituency :", "ವಿಧಾನ ಪರಿಷತ್ತು - ಮಾಜಿ ಶಾಸಕರ ಕ್ಷೇತ್ರ :");
+                        kannadaKeys.put("MLC Constituency :", "ವಿಧಾನ ಪರಿಷತ್ - ಶಾಸಕರ ಕ್ಷೇತ್ರ :");
+                        kannadaKeys.put("CM Remark :", "ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ ಸಾರಾಂಶ :");
+                        kannadaKeys.put("Priority :", "ಆದ್ಯತೆ :");
+                        kannadaKeys.put("Number of Days :", "ದಿನಗಳ ಸಂಖ್ಯೆ :");
+                        kannadaKeys.put("eOffice Receipt Cmp No :", "ಇ-ಕಚೇರಿ ಕಂಪ್ಯೂಟರ್ ರಶೀದಿ ನಂ. :");
+                        kannadaKeys.put("eOffice Status :", "ಇ-ಕಚೇರಿ ಸ್ಥಿತಿ  :");
+                        kannadaKeys.put("eOffice Receipt No :", "ಇ-ಕಚೇರಿ ರಶೀದಿ ನಂ. :");
+                        kannadaKeys.put("eOffice Currently With :", "ಇ-ಕಚೇರಿ ಪ್ರಸ್ತುತ ಹಂತ :");
+                        kannadaKeys.put("eOffice Since When :", "ಇ-ಕಚೇರಿ ಯಾವಾಗಿಂದ :");
+                        kannadaKeys.put("eOffice Closing Remarks :", "ಇ-ಕಚೇರಿ ಮುಕ್ತಾಯ ಟಿಪ್ಪಣಿಗಳು :");
+                        kannadaKeys.put("eOffice FileNumber :", "ಇ-ಕಚೇರಿ ಪತ್ರ ನಂ. :");
+                        kannadaKeys.put("eOffice File Cmp No :", "ಇ-ಕಚೇರಿ ಪತ್ರ ಸಿಎಂಪಿ ನಂ. :");
+                        kannadaKeys.put("eOffice Receipt Updated On :", "ಇ-ಕಚೇರಿ ರಸೀತು ನವೀಕರಿಸಲಾದ ದಿನಾಂಕ :");
+                        kannadaKeys.put("eOffice Dep Code :", "ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :");
 
-                        kannadaDataMap.put(kannadaKeys.get("Representative No :"),dataMap.get("Representative No :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative No :"), dataMap.get("Representative No :"));
                         // Time formatting
                         String time = dataMap.get("Date :");
                         try {
@@ -521,49 +526,49 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         } catch (java.text.ParseException e) {
                             throw new RuntimeException(e);
                         }
-                        kannadaDataMap.put(kannadaKeys.get("Letter No :"),dataMap.get("Letter No :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Name :"),dataMap.get("Representative Name :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Mob :"),dataMap.get("Representative Mob :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Address :"),dataMap.get("Representative Address :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Griv Category :"),dataMap.get("Representative Griv Category :"));
-                        kannadaDataMap.put(kannadaKeys.get("Attachment :"),dataMap.get("Attachment :"));
-                        kannadaDataMap.put(kannadaKeys.get("CM Note Path :"),dataMap.get("CM Note Path :"));
-                        kannadaDataMap.put(kannadaKeys.get("Letter Description :"),dataMap.get("Letter Description :"));
+                        kannadaDataMap.put(kannadaKeys.get("Letter No :"), dataMap.get("Letter No :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative Name :"), dataMap.get("Representative Name :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative Mob :"), dataMap.get("Representative Mob :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative Address :"), dataMap.get("Representative Address :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative Griv Category :"), dataMap.get("Representative Griv Category :"));
+                        kannadaDataMap.put(kannadaKeys.get("Attachment :"), dataMap.get("Attachment :"));
+                        kannadaDataMap.put(kannadaKeys.get("CM Note Path :"), dataMap.get("CM Note Path :"));
+                        kannadaDataMap.put(kannadaKeys.get("Letter Description :"), dataMap.get("Letter Description :"));
                         if (Objects.equals(dataMap.get("Status :"), "1")) {
                             kannadaDataMap.put(kannadaKeys.get("Status :"), "ರವಾನಿಸಲಾಗಿದೆ");
                         } else {
                             kannadaDataMap.put(kannadaKeys.get("Status :"), "ಮುಚ್ಚಲಾಗಿದೆ");
                         }
-                        kannadaDataMap.put(kannadaKeys.get("Forwarded Dept Id :"),dataMap.get("Forwarded Dept Id :"));
-                        kannadaDataMap.put(kannadaKeys.get("Forwarded LineDepartment ID :"),dataMap.get("Forwarded LineDepartment ID :"));
-                        kannadaDataMap.put(kannadaKeys.get("Forwarded District ID :"),dataMap.get("Forwarded District ID :"));
-                        kannadaDataMap.put(kannadaKeys.get("Post Name :"),dataMap.get("Post Name :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Type :"),dataMap.get("Representative Type :"));
-                        kannadaDataMap.put(kannadaKeys.get("MLA Constituency :"),dataMap.get("MLA Constituency :"));
-                        kannadaDataMap.put(kannadaKeys.get("MP-Lok Sabha Constituency :"),dataMap.get("MP-Lok Sabha Constituency :"));
-                        kannadaDataMap.put(kannadaKeys.get("MP-Rajya Sabha Constituency :"),dataMap.get("MP-Rajya Sabha Constituency :"));
-                        kannadaDataMap.put(kannadaKeys.get("MLC Constituency :"),dataMap.get("MLC Constituency :"));
-                        kannadaDataMap.put(kannadaKeys.get("CM Remark :"),dataMap.get("CM Remark :"));
-                        kannadaDataMap.put(kannadaKeys.get("Priority :"),dataMap.get("Priority :"));
-                        kannadaDataMap.put(kannadaKeys.get("Number of Days :"),dataMap.get("Number of Days :"));
-                        kannadaDataMap.put(kannadaKeys.get("Closure Date :"),dataMap.get("Closure Date :"));
-                        kannadaDataMap.put(kannadaKeys.get("Closure Description :"),dataMap.get("Closure Description :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg is Atr Filled :"),dataMap.get("Rg is Atr Filled :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg is Active :"),dataMap.get("Rg is Active :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg Created On :"),dataMap.get("Rg Created On :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg Created By :"),dataMap.get("Rg Created By :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg Updated On :"),dataMap.get("Rg Updated On :"));
-                        kannadaDataMap.put(kannadaKeys.get("Rg Updated By :"),dataMap.get("Rg Updated By :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt Cmp No :"),dataMap.get("eOffice Receipt Cmp No :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Status :"),dataMap.get("eOffice Status :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt No :"),dataMap.get("eOffice Receipt No :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Currently With :"),dataMap.get("eOffice Currently With :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Since When :"),dataMap.get("eOffice Since When :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Closing Remarks :"),dataMap.get("eOffice Closing Remarks :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice FileNumber :"),dataMap.get("eOffice FileNumber :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice File Cmp No :"),dataMap.get("eOffice File Cmp No :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt Updated On :"),dataMap.get("eOffice Receipt Updated On :"));
-                        kannadaDataMap.put(kannadaKeys.get("eOffice Dep Code :"),dataMap.get("eOffice Dep Code :"));
+                        kannadaDataMap.put(kannadaKeys.get("Forwarded Dept Id :"), dataMap.get("Forwarded Dept Id :"));
+                        kannadaDataMap.put(kannadaKeys.get("Forwarded LineDepartment ID :"), dataMap.get("Forwarded LineDepartment ID :"));
+                        kannadaDataMap.put(kannadaKeys.get("Forwarded District ID :"), dataMap.get("Forwarded District ID :"));
+                        kannadaDataMap.put(kannadaKeys.get("Post Name :"), dataMap.get("Post Name :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative Type :"), dataMap.get("Representative Type :"));
+                        kannadaDataMap.put(kannadaKeys.get("MLA Constituency :"), dataMap.get("MLA Constituency :"));
+                        kannadaDataMap.put(kannadaKeys.get("MP-Lok Sabha Constituency :"), dataMap.get("MP-Lok Sabha Constituency :"));
+                        kannadaDataMap.put(kannadaKeys.get("MP-Rajya Sabha Constituency :"), dataMap.get("MP-Rajya Sabha Constituency :"));
+                        kannadaDataMap.put(kannadaKeys.get("MLC Constituency :"), dataMap.get("MLC Constituency :"));
+                        kannadaDataMap.put(kannadaKeys.get("CM Remark :"), dataMap.get("CM Remark :"));
+                        kannadaDataMap.put(kannadaKeys.get("Priority :"), dataMap.get("Priority :"));
+                        kannadaDataMap.put(kannadaKeys.get("Number of Days :"), dataMap.get("Number of Days :"));
+                        kannadaDataMap.put(kannadaKeys.get("Closure Date :"), dataMap.get("Closure Date :"));
+                        kannadaDataMap.put(kannadaKeys.get("Closure Description :"), dataMap.get("Closure Description :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg is Atr Filled :"), dataMap.get("Rg is Atr Filled :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg is Active :"), dataMap.get("Rg is Active :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg Created On :"), dataMap.get("Rg Created On :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg Created By :"), dataMap.get("Rg Created By :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg Updated On :"), dataMap.get("Rg Updated On :"));
+                        kannadaDataMap.put(kannadaKeys.get("Rg Updated By :"), dataMap.get("Rg Updated By :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt Cmp No :"), dataMap.get("eOffice Receipt Cmp No :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Status :"), dataMap.get("eOffice Status :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt No :"), dataMap.get("eOffice Receipt No :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Currently With :"), dataMap.get("eOffice Currently With :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Since When :"), dataMap.get("eOffice Since When :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Closing Remarks :"), dataMap.get("eOffice Closing Remarks :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice FileNumber :"), dataMap.get("eOffice FileNumber :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice File Cmp No :"), dataMap.get("eOffice File Cmp No :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Receipt Updated On :"), dataMap.get("eOffice Receipt Updated On :"));
+                        kannadaDataMap.put(kannadaKeys.get("eOffice Dep Code :"), dataMap.get("eOffice Dep Code :"));
 
                         recyclerView_name = findViewById(R.id.recycleView_letter_name);
                         LetterDetails_Adapter adapter_name = new LetterDetails_Adapter(context, kannadaDataMap);
@@ -687,10 +692,5 @@ public class LetterDetailsActivity extends AppCompatActivity {
                 Log.e("fetchRepDetails", "API call failed: " + t.getMessage());
             }
         });
-    }
-
-    public static boolean containsKannadaCharacters(String str) {
-        // Check if the string contains any Kannada characters (Unicode range: \u0C80 to \u0CFF)
-        return str != null && str.matches(".*[\\u0C80-\\u0CFF].*");
     }
 }

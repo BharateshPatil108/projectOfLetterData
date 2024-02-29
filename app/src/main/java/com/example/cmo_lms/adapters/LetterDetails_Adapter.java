@@ -104,7 +104,7 @@ public class LetterDetails_Adapter extends RecyclerView.Adapter<LetterDetails_Ad
             List<String> keysToSkip;
             if (LanguageUtil.getCurrentLanguage().equals("en")) {
                 keysToSkip = Arrays.asList("Rg ID :", "Rg is Atr Filled :", "Rg is Active :", "Rg Created On :", "Rg Created By :", "Rg Updated On :", "Rg Updated By :", "eOffice Dep Code :", "eOffice Receipt Cmp No :", "eOffice Status :", "eOffice Receipt No :", "eOffice Currently With :", "eOffice Since When :", "eOffice Closing Remarks :", "eOffice FileNumber :", "eOffice File Cmp No :", "eOffice Receipt Updated On :", "Attachment :");
-            } else  {
+            } else {
                 keysToSkip = Arrays.asList("ಆರ್ ಜಿ ಐಡಿ :", "ಆರ್ ಜಿ ಎಟಿಆರ್ ತುಂಬಿದೆ :", "ಆರ್ ಜಿ ಸಕ್ರಿಯವಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ರಚಿಸಿದವರು :", "ಆರ್ ಜಿ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಆರ್ ಜಿ ಇವರಿಂದ ನವೀಕರಿಸಲಾಗಿದೆ :", "ಇ-ಕಚೇರಿ ಇಲಾಖೆ ಸಂಖ್ಯೆ :", "ಇ-ಕಚೇರಿ ಕಂಪ್ಯೂಟರ್ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಸ್ಥಿತಿ  :", "ಇ-ಕಚೇರಿ ರಶೀದಿ ನಂ. :", "ಇ-ಕಚೇರಿ ಪ್ರಸ್ತುತ ಹಂತ :", "ಇ-ಕಚೇರಿ ಯಾವಾಗಿಂದ :", "ಇ-ಕಚೇರಿ ಮುಕ್ತಾಯ ಟಿಪ್ಪಣಿಗಳು :", "ಇ-ಕಚೇರಿ ಪತ್ರ ನಂ. :", "ಇ-ಕಚೇರಿ ಪತ್ರ ಸಿಎಂಪಿ ನಂ. :", "ಇ-ಕಚೇರಿ ರಸೀತು ನವೀಕರಿಸಲಾದ ದಿನಾಂಕ :", "ಲಗತ್ತು :");
             }
             return keysToSkip.contains(key);

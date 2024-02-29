@@ -60,9 +60,9 @@
                 android:background="@android:color/transparent"
                 android:text="ಕನ್ನಡ"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/id_log_out"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"/>
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/id_log_out" />
 
             <Button
                 android:id="@+id/id_lang_change_en"
@@ -70,11 +70,11 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:text="English"
-                android:visibility="gone"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/id_log_out"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"/>
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/id_log_out" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -224,13 +224,13 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
+                    android:baselineAligned="false"
                     android:gravity="center"
-                    android:weightSum="3"
                     android:orientation="horizontal"
+                    android:weightSum="3"
                     app:layout_constraintEnd_toEndOf="@+id/constratint_text"
                     app:layout_constraintStart_toStartOf="@+id/constratint_text"
-                    app:layout_constraintTop_toBottomOf="@+id/search_cv"
-                    android:baselineAligned="false">
+                    app:layout_constraintTop_toBottomOf="@+id/search_cv">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/both_cv_text_const_lay_tr"
@@ -263,14 +263,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:gravity="center_horizontal"
+                            android:lines="2"
                             android:text="@string/total_received"
                             android:textColor="@color/dark_blue"
                             android:textStyle="bold"
-                            android:lines="2"
-                            android:gravity="center_horizontal"
-                            app:layout_constraintTop_toBottomOf="@+id/cv_tr"
+                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tr"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_tr"
-                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tr"/>
+                            app:layout_constraintTop_toBottomOf="@+id/cv_tr" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -307,15 +307,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@string/total_disposed"
                             android:gravity="center_horizontal"
+                            android:lines="2"
+                            android:text="@string/total_disposed"
                             android:textColor="@color/teal_700"
                             android:textStyle="bold"
-                            android:lines="2"
                             android:visibility="gone"
-                            app:layout_constraintTop_toBottomOf="@+id/cv_td"
+                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_td"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_td"
-                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_td"/>
+                            app:layout_constraintTop_toBottomOf="@+id/cv_td" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -352,15 +352,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@string/total_pending"
-                            android:lines="2"
                             android:gravity="center_horizontal"
+                            android:lines="2"
+                            android:text="@string/total_pending"
                             android:textColor="@color/ochare"
                             android:textStyle="bold"
                             android:visibility="gone"
-                            app:layout_constraintTop_toBottomOf="@+id/cv_tp"
+                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tp"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_tp"
-                            app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tp"/>
+                            app:layout_constraintTop_toBottomOf="@+id/cv_tp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

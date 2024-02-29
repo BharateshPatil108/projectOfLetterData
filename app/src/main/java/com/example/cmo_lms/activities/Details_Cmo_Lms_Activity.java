@@ -174,7 +174,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
 
     }
 
-    public  void setLanguage(String languageCode) {
+    public void setLanguage(String languageCode) {
         if (context != null) {
             LanguageUtil.setAppLocale(context, languageCode);
             recreate();

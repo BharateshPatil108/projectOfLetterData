@@ -43,6 +43,7 @@ public class JsonUtils {
 
     private static final Map<String, String> repTypeMap = new LinkedHashMap<>();
     static Map<String, String> resultMap = new LinkedHashMap<>();
+
     public static String getRepTypeName(String id) {
         return repTypeMap.get(id);
     }
@@ -160,49 +161,49 @@ public class JsonUtils {
 
     private static Map<String, String> letterDataToMap(Searchref_noResponseModel receivedModel) {
 
-            resultMap.put("Rg ID :", String.valueOf(receivedModel.getRgId()));
-            resultMap.put("Representative No :", receivedModel.getRgRef());
-            resultMap.put("Date :", receivedModel.getRgDate());
-            resultMap.put("Letter No :", receivedModel.getRgLetterNo());
-            resultMap.put("Representative Name :", String.valueOf(receivedModel.getRgRepresentativeId()));
-            resultMap.put("Representative Mob :", receivedModel.getRgRepresentativeMob());
-            resultMap.put("Representative Address :", receivedModel.getRgAddress1());
-            resultMap.put("Representative Griv Category :", String.valueOf(receivedModel.getRgGrivCategoryId()));
-            resultMap.put("Attachment :", receivedModel.getRgAttachementPath());
-            resultMap.put("CM Note Path :", receivedModel.getReCmNotePath());
-            resultMap.put("Letter Description :", receivedModel.getRgGrievanceDesc());
-            resultMap.put("Forwarded Dept Id :", String.valueOf(receivedModel.getRgForwardedDeptId()));
-            resultMap.put("Forwarded LineDepartment ID :", String.valueOf(receivedModel.getRgForwardedLinedepartmentId()));
-            resultMap.put("Forwarded District ID :", String.valueOf(receivedModel.getRgForwardedDistrictId()));
-            resultMap.put("Status :", mapActionType(receivedModel.getRgCmogActionType()));
-            resultMap.put("Closure Date :", receivedModel.getRgClosureDate());
-            resultMap.put("Closure Description :", receivedModel.getRgClosureDescription());
-            resultMap.put("Post Name :", String.valueOf(receivedModel.getRgPostId()));
-            resultMap.put("Rg is Atr Filled :", String.valueOf(receivedModel.getRgIsAtrFilled()));
-            resultMap.put("Rg is Active :", String.valueOf(receivedModel.getRgIsActive()));
-            resultMap.put("Rg Created On :", receivedModel.getRgCreatedOn());
-            resultMap.put("Rg Created By :", String.valueOf(receivedModel.getRgCreatedBy()));
-            resultMap.put("Rg Updated On :", receivedModel.getRgUpdatedOn());
-            resultMap.put("Rg Updated By :", String.valueOf(receivedModel.getRgUpdatedBy()));
-            resultMap.put("Representative Type :", getRepTypeName(String.valueOf(receivedModel.getRepType())));
-            resultMap.put("MLA Constituency :", String.valueOf(receivedModel.getMlaConstituency()));
-            resultMap.put("MP-Lok Sabha Constituency :", String.valueOf(receivedModel.getMplConstituency()));
-            resultMap.put("MP-Rajya Sabha Constituency :", String.valueOf(receivedModel.getMprConstituency()));
-            resultMap.put("Ex MLC Constituency :", String.valueOf(receivedModel.getExMlcConstituency()));
-            resultMap.put("MLC Constituency :", String.valueOf(receivedModel.getMlcConstituency()));
-            resultMap.put("CM Remark :", receivedModel.getRgCmRemark());
-            resultMap.put("Priority :", String.valueOf(receivedModel.getRgPriority()));
-            resultMap.put("Number of Days :", String.valueOf(receivedModel.getRgNoDays()));
-            resultMap.put("eOffice Receipt Cmp No :", String.valueOf(receivedModel.getEofficeReciptCmpNo()));
-            resultMap.put("eOffice Status :", receivedModel.getEofficeStatus());
-            resultMap.put("eOffice Receipt No :", receivedModel.getEofficeReceiptNo());
-            resultMap.put("eOffice Currently With :", receivedModel.getEofficeCurrenetlyWith());
-            resultMap.put("eOffice Since When :", String.valueOf(receivedModel.getEofficeSinceWhen()));
-            resultMap.put("eOffice Closing Remarks :", receivedModel.getEofficeClosingRemarks());
-            resultMap.put("eOffice FileNumber :", receivedModel.getEofficeFilenumber());
-            resultMap.put("eOffice File Cmp No :", receivedModel.getEofficeFileCmpNo());
-            resultMap.put("eOffice Receipt Updated On :", receivedModel.getEofficeReciptUpdatedOn());
-            resultMap.put("eOffice Dep Code :", String.valueOf(receivedModel.getEofficeDepCode()));
+        resultMap.put("Rg ID :", String.valueOf(receivedModel.getRgId()));
+        resultMap.put("Representative No :", receivedModel.getRgRef());
+        resultMap.put("Date :", receivedModel.getRgDate());
+        resultMap.put("Letter No :", receivedModel.getRgLetterNo());
+        resultMap.put("Representative Name :", String.valueOf(receivedModel.getRgRepresentativeId()));
+        resultMap.put("Representative Mob :", receivedModel.getRgRepresentativeMob());
+        resultMap.put("Representative Address :", receivedModel.getRgAddress1());
+        resultMap.put("Representative Griv Category :", String.valueOf(receivedModel.getRgGrivCategoryId()));
+        resultMap.put("Attachment :", receivedModel.getRgAttachementPath());
+        resultMap.put("CM Note Path :", receivedModel.getReCmNotePath());
+        resultMap.put("Letter Description :", receivedModel.getRgGrievanceDesc());
+        resultMap.put("Forwarded Dept Id :", String.valueOf(receivedModel.getRgForwardedDeptId()));
+        resultMap.put("Forwarded LineDepartment ID :", String.valueOf(receivedModel.getRgForwardedLinedepartmentId()));
+        resultMap.put("Forwarded District ID :", String.valueOf(receivedModel.getRgForwardedDistrictId()));
+        resultMap.put("Status :", mapActionType(receivedModel.getRgCmogActionType()));
+        resultMap.put("Closure Date :", receivedModel.getRgClosureDate());
+        resultMap.put("Closure Description :", receivedModel.getRgClosureDescription());
+        resultMap.put("Post Name :", String.valueOf(receivedModel.getRgPostId()));
+        resultMap.put("Rg is Atr Filled :", String.valueOf(receivedModel.getRgIsAtrFilled()));
+        resultMap.put("Rg is Active :", String.valueOf(receivedModel.getRgIsActive()));
+        resultMap.put("Rg Created On :", receivedModel.getRgCreatedOn());
+        resultMap.put("Rg Created By :", String.valueOf(receivedModel.getRgCreatedBy()));
+        resultMap.put("Rg Updated On :", receivedModel.getRgUpdatedOn());
+        resultMap.put("Rg Updated By :", String.valueOf(receivedModel.getRgUpdatedBy()));
+        resultMap.put("Representative Type :", getRepTypeName(String.valueOf(receivedModel.getRepType())));
+        resultMap.put("MLA Constituency :", String.valueOf(receivedModel.getMlaConstituency()));
+        resultMap.put("MP-Lok Sabha Constituency :", String.valueOf(receivedModel.getMplConstituency()));
+        resultMap.put("MP-Rajya Sabha Constituency :", String.valueOf(receivedModel.getMprConstituency()));
+        resultMap.put("Ex MLC Constituency :", String.valueOf(receivedModel.getExMlcConstituency()));
+        resultMap.put("MLC Constituency :", String.valueOf(receivedModel.getMlcConstituency()));
+        resultMap.put("CM Remark :", receivedModel.getRgCmRemark());
+        resultMap.put("Priority :", String.valueOf(receivedModel.getRgPriority()));
+        resultMap.put("Number of Days :", String.valueOf(receivedModel.getRgNoDays()));
+        resultMap.put("eOffice Receipt Cmp No :", String.valueOf(receivedModel.getEofficeReciptCmpNo()));
+        resultMap.put("eOffice Status :", receivedModel.getEofficeStatus());
+        resultMap.put("eOffice Receipt No :", receivedModel.getEofficeReceiptNo());
+        resultMap.put("eOffice Currently With :", receivedModel.getEofficeCurrenetlyWith());
+        resultMap.put("eOffice Since When :", String.valueOf(receivedModel.getEofficeSinceWhen()));
+        resultMap.put("eOffice Closing Remarks :", receivedModel.getEofficeClosingRemarks());
+        resultMap.put("eOffice FileNumber :", receivedModel.getEofficeFilenumber());
+        resultMap.put("eOffice File Cmp No :", receivedModel.getEofficeFileCmpNo());
+        resultMap.put("eOffice Receipt Updated On :", receivedModel.getEofficeReciptUpdatedOn());
+        resultMap.put("eOffice Dep Code :", String.valueOf(receivedModel.getEofficeDepCode()));
 
         return resultMap;
     }
