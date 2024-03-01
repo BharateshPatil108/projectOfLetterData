@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -79,6 +78,9 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Call AsyncTask to initiate network call
+        new SummaryReportAsyncTask().execute();
+
         setContentView(R.layout.activity_details_cmo_lms);
 
         background_img = findViewById(R.id.imageView1);
@@ -121,9 +123,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(bounceAnimator);
         animatorSet.start();
-
-        // Call AsyncTask to initiate network call
-        new SummaryReportAsyncTask().execute();
 
         search_img.setOnClickListener(v -> search_edt_txt.requestFocus());
 
@@ -244,6 +243,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                             List<SearchResponseModel> dataList_of_searchName = new Gson().fromJson(jsonString, new TypeToken<List<SearchResponseModel>>() {
                             }.getType());
                             showCustomDialogOfSearchByName(dataList_of_searchName);
+                            Log.d("SearchResponseModel data:", dataList_of_searchName.toString());
                         }
                     } else {
                         Toast.makeText(context, "Search name response failed", Toast.LENGTH_SHORT).show();
@@ -451,15 +451,15 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 for (Map<String, Integer> countsMap : innerDataMap.values()) {
                     if (LanguageUtil.getCurrentLanguage().equals("en")) {
                         if (countsMap != null) {
-                            totalPendingCount += countsMap.getOrDefault("Pending Count", 0);
-                            totalClosedCount += countsMap.getOrDefault("Closed Count", 0);
-                            totalCount += countsMap.getOrDefault("Count", 0);
+                            totalPendingCount += countsMap.getOrDefault("Pending", 0);
+                            totalClosedCount += countsMap.getOrDefault("Disposed", 0);
+                            totalCount += countsMap.getOrDefault("Received", 0);
                         }
                     } else {
                         if (countsMap != null) {
-                            totalPendingCount += countsMap.getOrDefault("ಬಾಕಿಯಿರುವ ಎಣಿಕೆ", 0);
-                            totalClosedCount += countsMap.getOrDefault("ಮುಚ್ಚಿದ ಎಣಿಕೆ", 0);
-                            totalCount += countsMap.getOrDefault("ಎಣಿಕೆ", 0);
+                            totalPendingCount += countsMap.getOrDefault("ಬಾಕಿ", 0);
+                            totalClosedCount += countsMap.getOrDefault("ಒಟ್ಟು ವಿಲೇವಾರಿ", 0);
+                            totalCount += countsMap.getOrDefault("ಒಟ್ಟು ಸ್ವೀಕೃತಿ", 0);
                         }
                     }
                 }
@@ -499,6 +499,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
 
                 return alldata;
             } else {
+                assert response.errorBody() != null;
                 Log.e("Unsuccessful Response", response.errorBody().toString());
             }
         } catch (IOException e) {
@@ -508,6 +509,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         return null;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class SummaryReportAsyncTask extends AsyncTask<Void, Void, Pair<String[], Map<String, Map<String, Integer>>>> {
         @Override
         protected Pair<String[], Map<String, Map<String, Integer>>> doInBackground(Void... voids) {

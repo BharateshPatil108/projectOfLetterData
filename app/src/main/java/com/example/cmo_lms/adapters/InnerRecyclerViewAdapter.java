@@ -42,11 +42,11 @@ public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecycler
         if (innerDataList != null) {
             Log.e("innerrecycler data :", innerDataList.toString());
             if (LanguageUtil.getCurrentLanguage().equals("en")) {
-                String receivedValue = String.valueOf(innerDataList.get("Count"));
-                String disposedValue = String.valueOf(innerDataList.get("Closed Count"));
-                String acceptedValue = String.valueOf(innerDataList.get("Accepted Closed Count"));
-                String rejectedValue = String.valueOf(innerDataList.get("Rejected Closed Count"));
-                String pendingValue = String.valueOf(innerDataList.get("Pending Count"));
+                String receivedValue = String.valueOf(innerDataList.get("Received"));
+                String disposedValue = String.valueOf(innerDataList.get("Disposed"));
+                String acceptedValue = String.valueOf(innerDataList.get("Accepted"));
+                String rejectedValue = String.valueOf(innerDataList.get("Rejected"));
+                String pendingValue = String.valueOf(innerDataList.get("Pending"));
 
                 holder.setDetailsData("Received", receivedValue);
                 holder.setDetailsData("Disposed", disposedValue);
@@ -54,11 +54,11 @@ public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecycler
                 holder.setDetailsData("Rejected", rejectedValue);
                 holder.setDetailsData("Pending", pendingValue);
             } else {
-                String receivedValue = String.valueOf(innerDataList.get("ಎಣಿಕೆ"));
-                String disposedValue = String.valueOf(innerDataList.get("ಮುಚ್ಚಿದ ಎಣಿಕೆ"));
-                String acceptedValue = String.valueOf(innerDataList.get("ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ"));
-                String rejectedValue = String.valueOf(innerDataList.get("ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗಿದೆ"));
-                String pendingValue = String.valueOf(innerDataList.get("ಬಾಕಿಯಿರುವ ಎಣಿಕೆ"));
+                String receivedValue = String.valueOf(innerDataList.get("ಒಟ್ಟು ಸ್ವೀಕೃತಿ"));
+                String disposedValue = String.valueOf(innerDataList.get("ಒಟ್ಟು ವಿಲೇವಾರಿ"));
+                String acceptedValue = String.valueOf(innerDataList.get("ಸ್ವೀಕೃತ ವಿಲೇವಾರಿ"));
+                String rejectedValue = String.valueOf(innerDataList.get("ತಿರಸ್ಕೃತ ವಿಲೇವಾರಿ"));
+                String pendingValue = String.valueOf(innerDataList.get("ಬಾಕಿ"));
 
                 holder.setDetailsData("Received", receivedValue);
                 holder.setDetailsData("Disposed", disposedValue);

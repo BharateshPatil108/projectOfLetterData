@@ -42,7 +42,7 @@ public class LetterDetailsEofficeAdapter extends RecyclerView.Adapter<LetterDeta
         holder.bind(dataMap, position);
         Log.e("adapter data for search refno", dataMap.toString());
         Log.e("adapter data for search name ", dataMap.toString());
-        //setAnimation(holder.itemView, position);
+        setAnimation(holder.itemView, position);
     }
 
     @Override

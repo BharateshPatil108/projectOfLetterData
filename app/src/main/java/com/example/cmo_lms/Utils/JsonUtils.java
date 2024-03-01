@@ -107,17 +107,17 @@ public class JsonUtils {
                 Map<String, Integer> countsMap = new HashMap<>();
 
                 if (currentLanguage.equals("kn")) {
-                    countsMap.put("ಎಣಿಕೆ", jsonObject.get("Count").getAsInt());
-                    countsMap.put("ಬಾಕಿಯಿರುವ ಎಣಿಕೆ", jsonObject.get("PendingCount").getAsInt());
-                    countsMap.put("ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ", jsonObject.get("AcceptedClosedCount").getAsInt());
-                    countsMap.put("ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗಿದೆ", jsonObject.get("RejectedClosedCount").getAsInt());
-                    countsMap.put("ಮುಚ್ಚಿದ ಎಣಿಕೆ", jsonObject.get("ClosedCount").getAsInt());
+                    countsMap.put("ಒಟ್ಟು ಸ್ವೀಕೃತಿ", jsonObject.get("Count").getAsInt());
+                    countsMap.put("ಬಾಕಿ", jsonObject.get("PendingCount").getAsInt());
+                    countsMap.put("ಸ್ವೀಕೃತ ವಿಲೇವಾರಿ", jsonObject.get("AcceptedClosedCount").getAsInt());
+                    countsMap.put("ತಿರಸ್ಕೃತ ವಿಲೇವಾರಿ", jsonObject.get("RejectedClosedCount").getAsInt());
+                    countsMap.put("ಒಟ್ಟು ವಿಲೇವಾರಿ", jsonObject.get("ClosedCount").getAsInt());
                 } else {
-                    countsMap.put("Count", jsonObject.get("Count").getAsInt());
-                    countsMap.put("Pending Count", jsonObject.get("PendingCount").getAsInt());
-                    countsMap.put("Accepted Closed Count", jsonObject.get("AcceptedClosedCount").getAsInt());
-                    countsMap.put("Rejected Closed Count", jsonObject.get("RejectedClosedCount").getAsInt());
-                    countsMap.put("Closed Count", jsonObject.get("ClosedCount").getAsInt());
+                    countsMap.put("Received", jsonObject.get("Count").getAsInt());
+                    countsMap.put("Pending", jsonObject.get("PendingCount").getAsInt());
+                    countsMap.put("Accepted", jsonObject.get("AcceptedClosedCount").getAsInt());
+                    countsMap.put("Rejected", jsonObject.get("RejectedClosedCount").getAsInt());
+                    countsMap.put("Disposed", jsonObject.get("ClosedCount").getAsInt());
                 }
 
                 resultMap.put(name, countsMap);
@@ -167,7 +167,7 @@ public class JsonUtils {
         resultMap.put("Representative Name :", String.valueOf(receivedModel.getRgRepresentativeId()));
         resultMap.put("Representative Mob :", receivedModel.getRgRepresentativeMob());
         resultMap.put("Representative Address :", receivedModel.getRgAddress1());
-        resultMap.put("Representative Griv Category :", String.valueOf(receivedModel.getRgGrivCategoryId()));
+        resultMap.put("Representative subject category :", String.valueOf(receivedModel.getRgGrivCategoryId()));
         resultMap.put("Attachment :", receivedModel.getRgAttachementPath());
         resultMap.put("CM Note Path :", receivedModel.getReCmNotePath());
         resultMap.put("Letter Description :", receivedModel.getRgGrievanceDesc());
@@ -263,9 +263,9 @@ public class JsonUtils {
 
                 String[] innerKeysOrder;
                 if (getCurrentLanguage().equals("en")) {
-                    innerKeysOrder = new String[]{"Count", "Pending Count", "Accepted Closed Count", "Rejected Closed Count", "Closed Count"};
+                    innerKeysOrder = new String[]{"Received", "Pending", "Accepted", "Rejected", "Disposed"};
                 } else {
-                    innerKeysOrder = new String[]{"ಎಣಿಕೆ", "ಬಾಕಿಯಿರುವ ಎಣಿಕೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗಿದೆ", "ಮುಚ್ಚಿದ ಎಣಿಕೆ"};
+                    innerKeysOrder = new String[]{"ಒಟ್ಟು ಸ್ವೀಕೃತಿ", "ಬಾಕಿ", "ಸ್ವೀಕೃತ ವಿಲೇವಾರಿ", "ತಿರಸ್ಕೃತ ವಿಲೇವಾರಿ", "ಒಟ್ಟು ವಿಲೇವಾರಿ"};
                 }
                 // Draw inner keys and values in the specified order
                 for (String innerKey : innerKeysOrder) {

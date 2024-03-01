@@ -308,7 +308,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         Toast.makeText(context, "Don't have Letter details of the Given Ref No " + searchLetterData, Toast.LENGTH_SHORT).show();
                     } else {
 
-                        List<String> keysForApiCalls = Arrays.asList("Representative Griv Category :", "Forwarded Dept Id :", "Forwarded LineDepartment ID :", "Forwarded District ID :", "MLA Constituency :", "MP-Lok Sabha Constituency :", "Post Name :", "MP-Rajya Sabha Constituency :", "MLC Constituency :", "Ex MLC Constituency :");
+                        List<String> keysForApiCalls = Arrays.asList("Representative subject category :", "Forwarded Dept Id :", "Forwarded LineDepartment ID :", "Forwarded District ID :", "MLA Constituency :", "MP-Lok Sabha Constituency :", "Post Name :", "MP-Rajya Sabha Constituency :", "MLC Constituency :", "Ex MLC Constituency :");
 
                         if (!(dataMap.get("Attachment :") == null) || Objects.requireNonNull(dataMap.get("Attachment :")).isEmpty()) {
                             button.setVisibility(View.VISIBLE);
@@ -341,7 +341,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
     public void fetchRepDetails(Map<String, Integer> idsData) {
         JsonObject requestBody = new JsonObject();
 
-        requestBody.addProperty("rg_griv_category_id", idsData.get("Representative Griv Category :"));
+        requestBody.addProperty("rg_griv_category_id", idsData.get("Representative subject category :"));
         requestBody.addProperty("rg_forwarded_dept_id", idsData.get("Forwarded Dept Id :"));
         requestBody.addProperty("rg_line_department_id", idsData.get("Forwarded LineDepartment ID :"));
         requestBody.addProperty("mla_constituency", idsData.get("MLA Constituency :"));
@@ -388,11 +388,11 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         String[] catNameParts = cat_Name.split("/");
                         if (catNameParts.length >= 2) {
                             kannada_map.put("ವರ್ಗದ ಹೆಸರು :", catNameParts[0].trim());
-                            english_map.put("Representative Griv Category :", catNameParts[1].trim());
+                            english_map.put("Representative subject category :", catNameParts[1].trim());
                         }
                     } else {
                         kannada_map.put("ವರ್ಗದ ಹೆಸರು :", null);
-                        english_map.put("Representative Griv Category :", null);
+                        english_map.put("Representative subject category :", null);
                     }
 
                     String const_Name = repDetails.getConName();
@@ -434,7 +434,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                     if (LanguageUtil.getCurrentLanguage().equals("kn")) {
 
                         dataMap.put("Representative Name :", kannada_map.get("ಪ್ರತಿನಿಧಿ ಹೆಸರು :"));
-                        dataMap.put("Representative Griv Category :", kannada_map.get("ವರ್ಗದ ಹೆಸರು :"));
+                        dataMap.put("Representative subject category :", kannada_map.get("ವರ್ಗದ ಹೆಸರು :"));
                         dataMap.put("Forwarded Dept Id :", kannada_map.get("ಇಲಾಖೆಯ ಹೆಸರು :"));
                         dataMap.put("Forwarded LineDepartment ID :", kannada_map.get("ಸಾಲಿನ ಇಲಾಖೆಯ ಹೆಸರು :"));
                         dataMap.put("Post Name :", repDetails.getPostName());
@@ -464,7 +464,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         kannadaKeys.put("Representative Name :", "ಪ್ರತಿನಿಧಿ ಹೆಸರು :");
                         kannadaKeys.put("Representative Mob :", "ಪ್ರತಿನಿಧಿ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ. :");
                         kannadaKeys.put("Representative Address :", "ಪತ್ರದಲ್ಲಿರುವಂತೆ ವಿಳಾಸ :");
-                        kannadaKeys.put("Representative Griv Category :", "ಪ್ರತಿನಿಧಿ ಕುಂದುಕೊರತೆ ವರ್ಗ :");
+                        kannadaKeys.put("Representative subject category :", "ಪ್ರತಿನಿಧಿ ವಿಷಯದ ವರ್ಗ :");
                         kannadaKeys.put("Attachment :", "ಲಗತ್ತು :");
                         kannadaKeys.put("CM Note Path :", "ಮಾನ್ಯ ಮುಖ್ಯಮಂತ್ರಿಗಳ ಟಿಪ್ಪಣಿ :");
                         kannadaKeys.put("Letter Description :", "ಪತ್ರದ/ಟಿಪ್ಪಣಿಯ ಸಂಕ್ಷಿಪ್ತ ವಿವರ :");
@@ -523,7 +523,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         kannadaDataMap.put(kannadaKeys.get("Representative Name :"), dataMap.get("Representative Name :"));
                         kannadaDataMap.put(kannadaKeys.get("Representative Mob :"), dataMap.get("Representative Mob :"));
                         kannadaDataMap.put(kannadaKeys.get("Representative Address :"), dataMap.get("Representative Address :"));
-                        kannadaDataMap.put(kannadaKeys.get("Representative Griv Category :"), dataMap.get("Representative Griv Category :"));
+                        kannadaDataMap.put(kannadaKeys.get("Representative subject category :"), dataMap.get("Representative subject category :"));
                         kannadaDataMap.put(kannadaKeys.get("Attachment :"), dataMap.get("Attachment :"));
                         kannadaDataMap.put(kannadaKeys.get("CM Note Path :"), dataMap.get("CM Note Path :"));
                         kannadaDataMap.put(kannadaKeys.get("Letter Description :"), dataMap.get("Letter Description :"));
@@ -571,7 +571,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                     } else {
 
                         dataMap.put("Representative Name :", english_map.get("Representative Name :"));
-                        dataMap.put("Representative Griv Category :", english_map.get("Representative Griv Category :"));
+                        dataMap.put("Representative subject category :", english_map.get("Representative subject category :"));
                         dataMap.put("Forwarded Dept Id :", english_map.get("Forwarded Dept Id :"));
                         dataMap.put("Forwarded LineDepartment ID :", english_map.get("Forwarded LineDepartment ID :"));
                         dataMap.put("Post Name :", repDetails.getPostName());
