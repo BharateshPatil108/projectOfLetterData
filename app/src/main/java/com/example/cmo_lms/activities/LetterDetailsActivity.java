@@ -506,7 +506,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         String time = dataMap.get("Date :");
                         try {
                             @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
                             Date date = inputFormat.parse(time);
                             String formattedDate = outputFormat.format(date);
@@ -594,7 +594,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         String time = dataMap.get("Date :");
                         try {
                             @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
                             Date date = inputFormat.parse(time);
                             String formattedDate = outputFormat.format(date);
@@ -649,6 +649,10 @@ public class LetterDetailsActivity extends AppCompatActivity {
                             eOffice_dataMap.put(kannadaKeys_eOffice.get("Closing Remarks :"), null);
                         }
 
+                        if (eOffice_dataMap.get(kannadaKeys_eOffice.get("Receipt Updated On :")) != null) {
+                            eOffice_dataMap.put(kannadaKeys_eOffice.get("Receipt Updated On :"), null);
+                        }
+
                         LetterDetailsEofficeAdapter adapter_eOffice_details = new LetterDetailsEofficeAdapter(context, eOffice_dataMap);
                         recycleView_letter_eOffice.setLayoutManager(new LinearLayoutManager(context));
                         recycleView_letter_eOffice.setAdapter(adapter_eOffice_details);
@@ -667,6 +671,10 @@ public class LetterDetailsActivity extends AppCompatActivity {
 
                         if (Objects.equals(eOffice_dataMap.get("Status :"), "ACTIVE")) {
                             eOffice_dataMap.put("Closing Remarks :", null);
+                        }
+
+                        if (eOffice_dataMap.get("Receipt Updated On :") != null) {
+                            eOffice_dataMap.put("Receipt Updated On :", null);
                         }
 
                         LetterDetailsEofficeAdapter adapter_eOffice_details = new LetterDetailsEofficeAdapter(context, eOffice_dataMap);

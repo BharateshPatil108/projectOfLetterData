@@ -115,7 +115,12 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         lang_change_btn = findViewById(R.id.id_lang_change_en);
         lang_change_btn_kn = findViewById(R.id.id_lang_change_kn);
 
-        startSequentialAnimationForCardview();
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.recyle_anim);
+
+        // Set a delay for each CardView animation
+        cardViewTr.postDelayed(() -> cardViewTr.startAnimation(animation), 0);
+        cardViewTd.postDelayed(() -> cardViewTd.startAnimation(animation), 100);
+        cardViewTp.postDelayed(() -> cardViewTp.startAnimation(animation), 200);
 
         ObjectAnimator bounceAnimator = ObjectAnimator.ofFloat(search_img, "translationY", 0f, -50f, 0f);
         bounceAnimator.setDuration(2000);
@@ -389,52 +394,6 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
 
         alertDialog.show();
-    }
-
-    private void startSequentialAnimationForCardview() {
-        startFallingAnimation(cardViewTr);
-    }
-
-    private void startFallingAnimation(final CardView cardView) {
-        Animation fallingAnimation = AnimationUtils.loadAnimation(context, R.anim.falling_down_anim);
-
-        fallingAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                cardView.setTranslationY(0);
-
-                if (cardView == cardViewTr) {
-                    cardViewTd.setVisibility(View.VISIBLE);
-                    txt_td.setVisibility(View.VISIBLE);
-                    startFallingAnimation(cardViewTd);
-                } else if (cardView == cardViewTd) {
-                    cardViewTp.setVisibility(View.VISIBLE);
-                    txt_tp.setVisibility(View.VISIBLE);
-                    startFallingAnimation(cardViewTp);
-                } else if (cardView == cardViewTp) {
-
-                    resetCardPositions();
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-
-        // Start the animation on the cardView
-        cardView.startAnimation(fallingAnimation);
-    }
-
-    private void resetCardPositions() {
-        // Reset the Y positions of all card views
-        cardViewTr.setTranslationY(0);
-        cardViewTd.setTranslationY(0);
-        cardViewTp.setTranslationY(0);
     }
 
     private void handleSummaryReportResult(Pair<String[], Map<String, Map<String, Integer>>> alldata) {

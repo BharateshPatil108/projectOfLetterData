@@ -286,7 +286,6 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:backgroundTint="@color/teal_700"
-                            android:visibility="gone"
                             app:cardCornerRadius="25dp"
                             app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_td"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_td">
@@ -312,7 +311,6 @@
                             android:text="@string/total_disposed"
                             android:textColor="@color/teal_700"
                             android:textStyle="bold"
-                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_td"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_td"
                             app:layout_constraintTop_toBottomOf="@+id/cv_td" />
@@ -331,7 +329,6 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:backgroundTint="@color/ochare"
-                            android:visibility="gone"
                             app:cardCornerRadius="25dp"
                             app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tp"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_tp">
@@ -357,7 +354,6 @@
                             android:text="@string/total_pending"
                             android:textColor="@color/ochare"
                             android:textStyle="bold"
-                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="@+id/both_cv_text_const_lay_tp"
                             app:layout_constraintStart_toStartOf="@+id/both_cv_text_const_lay_tp"
                             app:layout_constraintTop_toBottomOf="@+id/cv_tp" />
