@@ -297,6 +297,7 @@ public class JsonUtils {
 
 
     public static void generatePdf(Map<String, String> pdfData, Context context) {
+
         Log.e("generate pdf data", String.valueOf(pdfData));
         PdfDocument pdfDocument = new PdfDocument();
         int pageWidth = 250;
@@ -328,6 +329,7 @@ public class JsonUtils {
         canvas.drawRect(borderWidth + padding, borderWidth + padding, pageWidth - borderWidth - padding, pageHeight - borderWidth - padding, borderPaint);
 
         boolean isFirstEntry = true;
+        boolean isFirstPage = true;
         for (Map.Entry<String, String> entry : pdfData.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -379,16 +381,31 @@ public class JsonUtils {
                         // Reset Y position for the new page
                         yPosition = lineHeight + borderWidth + padding + topPaddingInsideBorder;
 
-                        float keyXPosition = (pageWidth - keyWidth) / 2;
-
-                        float valueXaPosition = borderWidth + padding + keyWidth + 20;
-
-                        canvas.drawText(key, keyXPosition, yPosition, keyPaint);
-                        canvas.drawText(valueLines[0], valueXaPosition, yPosition, valuePaint);
-
-                        // Increment Y position for the next line
-                        yPosition += lineHeight;
+                        // Check if it's the first page
+                        if (isFirstPage) {
+                            // Draw the first line of the value on the new page
+                            canvas.drawText(valueLines[i], valueXPosition, yPosition, valuePaint);
+                            // Increment Y position for the next line
+                            yPosition += lineHeight;
+                            // Reset the flag
+                            isFirstPage = false;
+                        }
                     }
+                }
+
+                // Check if the current Y position crosses the bottom border
+                if (yPosition + lineHeight > pageHeight - borderWidth - padding) {
+                    // If the bottom border is crossed, start a new page
+                    pdfDocument.finishPage(page);
+                    pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pdfDocument.getPages().size() + 1).create();
+                    page = pdfDocument.startPage(pageInfo);
+                    canvas = page.getCanvas();
+
+                    // Draw border for the new page
+                    canvas.drawRect(borderWidth + padding, borderWidth + padding, pageWidth - borderWidth - padding, pageHeight - borderWidth - padding, borderPaint);
+
+                    // Reset Y position for the new page
+                    yPosition = lineHeight + borderWidth + padding + topPaddingInsideBorder;
                 }
 
                 if (isFirstEntry) {

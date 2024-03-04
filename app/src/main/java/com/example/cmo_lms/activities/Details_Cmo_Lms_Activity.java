@@ -136,7 +136,7 @@ public class Details_Cmo_Lms_Activity extends AppCompatActivity {
                 search_edt_txt.setEnabled(false);
                 showCustomLoadingDialog();
                 performSearch(search_edt_txt.getText().toString().trim());
-                new Handler().postDelayed(this::dismissCustomLoadingDialog, 2000);
+                new Handler().postDelayed(this::dismissCustomLoadingDialog, 4000);
                 return true;
             }
             return false;
