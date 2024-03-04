@@ -178,18 +178,11 @@ public class LetterDetailsActivity extends AppCompatActivity {
 
     private void DownloadViewPdf(String viewPdf_data) {
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        httpClient.addInterceptor(loggingInterceptor);
-
-        // Create Retrofit instance
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://ipgrs.karnataka.gov.in").addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-
         String[] pathSegments = viewPdf.trim().split("/");
         fileName = pathSegments[pathSegments.length - 1];
 
-        ApiService apiService = retrofit.create(ApiService.class);
+        Retrofit retrofit_searchIds = RetrofitClient.getClient();
+        ApiService apiService = retrofit_searchIds.create(ApiService.class);
         Call<ResponseBody> call_ids = apiService.downloadFile(viewPdf_data.trim());
 
         Log.d("Request ids", "URL: " + call_ids.request().url());
