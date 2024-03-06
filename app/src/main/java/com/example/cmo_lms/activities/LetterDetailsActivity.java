@@ -520,7 +520,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
                         kannadaDataMap.put(kannadaKeys.get("Attachment :"), dataMap.get("Attachment :"));
                         kannadaDataMap.put(kannadaKeys.get("CM Note Path :"), dataMap.get("CM Note Path :"));
                         kannadaDataMap.put(kannadaKeys.get("Letter Description :"), dataMap.get("Letter Description :"));
-                        if (Objects.equals(dataMap.get("Status :"), "1")) {
+                        if (Objects.equals(dataMap.get("Status :"), "Forwarded")) {
                             kannadaDataMap.put(kannadaKeys.get("Status :"), "ರವಾನಿಸಲಾಗಿದೆ");
                         } else {
                             kannadaDataMap.put(kannadaKeys.get("Status :"), "ಮುಚ್ಚಲಾಗಿದೆ");
@@ -599,13 +599,6 @@ public class LetterDetailsActivity extends AppCompatActivity {
                             e.printStackTrace();
                         } catch (java.text.ParseException e) {
                             throw new RuntimeException(e);
-                        }
-
-                        //  Status value setting
-                        if (Objects.equals(dataMap.get("Status :"), "1")) {
-                            dataMap.put("Status :", "Forwarded");
-                        } else {
-                            dataMap.put("Status :", "Closed");
                         }
 
                         recyclerView_name = findViewById(R.id.recycleView_letter_name);

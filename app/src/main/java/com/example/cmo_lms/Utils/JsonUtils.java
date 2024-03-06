@@ -210,9 +210,9 @@ public class JsonUtils {
     private static String mapActionType(int actionTypeId) {
         switch (actionTypeId) {
             case 1:
-                return "Closed";
-            case 2:
                 return "Forwarded";
+            case 2:
+                return "Closed";
             default:
                 return "Empty";
         }
