@@ -52,14 +52,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LetterDetailsActivity extends AppCompatActivity {
     static RecyclerView recyclerView_name;
@@ -104,7 +101,7 @@ public class LetterDetailsActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             dismissCustomLoadingDialog();
             showData();
-        }, 1500);
+        }, 4000);
 
         // search Letter data below
         Intent intent = getIntent();
